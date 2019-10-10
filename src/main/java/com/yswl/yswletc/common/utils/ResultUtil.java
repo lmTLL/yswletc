@@ -1,9 +1,8 @@
 package com.yswl.yswletc.common.utils;
 
 
-import com.yswlkj.yswl.common.vo.ResultVo;
-import com.yswlkj.yswl.common.vo.SystemCon;
-
+import com.yswl.yswletc.common.vo.ResultVo;
+import com.yswl.yswletc.common.vo.SystemCon;
 
 public class ResultUtil {
     public static ResultVo exec(boolean istrue, String msg, Object data){
