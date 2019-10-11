@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.yswl.yswletc.entity.User">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="project" jdbcType="INTEGER" property="project" />
     <result column="commission" jdbcType="DECIMAL" property="commission" />
@@ -11,24 +12,30 @@
     <result column="state" jdbcType="INTEGER" property="state" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, password, project, commission, recommender, state
+    id, name, phone, password, project, commission, recommender, state
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_user
     where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <!--根据名字查找用户信息，登陆-->
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_user
+    where name = #{name,jdbcType=INTEGER} and state=1
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.yswl.yswletc.entity.User">
-    insert into t_user (id, name, password, 
-      project, commission, recommender, 
-      state)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{project,jdbcType=INTEGER}, #{commission,jdbcType=DECIMAL}, #{recommender,jdbcType=INTEGER}, 
+    insert into t_user (id, name, phone, password,
+      project, commission, recommender, state) values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+      #{project,jdbcType=INTEGER}, #{commission,jdbcType=DECIMAL}, #{recommender,jdbcType=INTEGER},
       #{state,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.yswl.yswletc.entity.User">
@@ -39,6 +46,9 @@
       </if>
       <if test="name != null">
         name,
+      </if>
+      <if test="phone != null">
+        phone,
       </if>
       <if test="password != null">
         password,
@@ -63,6 +73,9 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
       </if>
@@ -86,6 +99,9 @@
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
+      <if test="phone != null">
+        name = #{phone,jdbcType=VARCHAR},
+      </if>
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
       </if>
@@ -107,6 +123,7 @@
   <update id="updateByPrimaryKey" parameterType="com.yswl.yswletc.entity.User">
     update t_user
     set name = #{name,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       project = #{project,jdbcType=INTEGER},
       commission = #{commission,jdbcType=DECIMAL},

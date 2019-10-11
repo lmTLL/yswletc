@@ -2,16 +2,19 @@ package com.yswl.yswletc.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @TableName(value = "t_user")
-public class User {
+public class User implements Serializable {
 
     private Integer id;
 
     private String name;
 
     private String password;
+
+    private String phone;
 
     private Integer project;
 
@@ -35,6 +38,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getPassword() {
