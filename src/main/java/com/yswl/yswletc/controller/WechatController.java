@@ -20,7 +20,7 @@ import java.util.TreeSet;
 @RequestMapping("/wechat")
 public class WechatController {
     private static final String TOKNG = "*****";//微信服务号设置的令牌
-    /**
+     /**
      *  微信接入入口
      * @return
      */

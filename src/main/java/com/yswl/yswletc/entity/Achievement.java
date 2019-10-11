@@ -1,6 +1,11 @@
 package com.yswl.yswletc.entity;
 
+
+import com.baomidou.mybatisplus.annotation.TableName;
+
+@TableName(value = "t_achievement")
 public class Achievement {
+
     private Integer id;
 
     private String username;

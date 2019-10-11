@@ -1,8 +1,12 @@
 package com.yswl.yswletc.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.math.BigDecimal;
 
+@TableName(value = "t_user")
 public class User {
+
     private Integer id;
 
     private String name;
