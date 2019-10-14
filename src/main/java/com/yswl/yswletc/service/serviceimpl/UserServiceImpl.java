@@ -28,11 +28,11 @@ public class UserServiceImpl implements UserService {
         List<User> list = userMapper.selectList(queryWrapper);
         for (User user1 : list) {
             if (user1 != null){
-                if(user1.getPassword().equals(user.getPassword())){//密码正确登入成功
+                if(user1.getPassword().equals(user.getPassword()) && user1.getName().equals(user.getName())){//密码正确登入成功
                     user1.setPassword(null);
                     return ResultUtil.exec(true,"OK",user1);
                 }else {
-                    return ResultUtil.exec(false,"ERROR","密码错误");
+                    return ResultUtil.exec(false,"ERROR","账号密码有误");
                 }
             }
         }
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 注册
+     * 邀请用户
      * @param user
      * @return
      */
@@ -56,5 +56,28 @@ public class UserServiceImpl implements UserService {
         }
         userMapper.insert(user);
         return ResultUtil.exec(true,"OK","邀请成功");
+    }
+
+    /**
+     * 修改密码
+     * @return
+     */
+    @Override
+    public ResultVo userAlterPassword(String name, String phone, String password, String newPassword) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("phone",phone);
+        List<User> list = userMapper.selectList(queryWrapper);
+        for (User user : list) {
+            if (user != null) {
+                if (user.getName().equals(name) && user.getPassword().equals(password)) {
+                    user.setPassword(newPassword);
+                    userMapper.updateById(user);
+                    return ResultUtil.exec(true,"OK","修改成功");
+                } else {
+                    return ResultUtil.exec(false,"ERROR","用户名或密码错误");
+                }
+            }
+        }
+        return ResultUtil.exec(false,"ERROR","未查找到该用户");
     }
 }

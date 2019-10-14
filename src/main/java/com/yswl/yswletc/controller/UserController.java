@@ -5,10 +5,12 @@ import com.yswl.yswletc.common.vo.ResultVo;
 import com.yswl.yswletc.entity.User;
 import com.yswl.yswletc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin
 public class UserController {
     @Autowired
     private RedisOperator redis;
@@ -26,7 +28,9 @@ public class UserController {
     }
 
 
-
-
+    @PostMapping("/user/alterPassword.do")
+    public ResultVo userAlterPassword(String name,String phone,String password,String newPassword){
+        return userService.userAlterPassword(name,phone,password,newPassword);
+    }
 
 }

@@ -1,10 +1,7 @@
 package com.yswl.yswletc.controller;
 
 import com.yswl.yswletc.common.utils.SHA1;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Iterator;
 import java.util.Set;
@@ -17,6 +14,7 @@ import java.util.TreeSet;
  * Description: 微信接入的口controller
  */
 @RestController
+@CrossOrigin
 @RequestMapping("/wechat")
 public class WechatController {
     private static final String TOKNG = "*****";//微信服务号设置的令牌

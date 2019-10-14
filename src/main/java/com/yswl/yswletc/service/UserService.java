@@ -8,4 +8,6 @@ public interface UserService {
     ResultVo userLogin(User user);
 
     ResultVo userRegister(User user);
+
+    ResultVo userAlterPassword(String name, String phone, String password, String newPassword);
 }

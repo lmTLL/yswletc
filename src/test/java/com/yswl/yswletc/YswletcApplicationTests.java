@@ -42,4 +42,25 @@ public class YswletcApplicationTests {
         List<Project> projects = projectMapper.selectList(null);
         System.out.println(projects);
     }
+    @Test
+    public void contextLoads2(){
+        String name="张三";
+        String password = "123456";
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("phone","15649591023");
+        List<User> list = userMapper.selectList(queryWrapper);
+        for (User user : list) {
+            if (user != null){
+                if (user.getName().equals(name) && user.getPassword().equals(password)){
+                    user.setPassword("abcd123");
+                    userMapper.updateById(user);
+                    System.out.println("修改成功");
+                }else {
+                    System.out.println("用户名或密码错误");
+                }
+            }else {
+                System.out.println("您提供的手机号有误");
+            }
+        }
+    }
 }
