@@ -37,15 +37,4 @@ public class User implements Serializable {
     private BigDecimal commission; //佣金
 
     private BigDecimal wallet; //钱包
-
-    public User(String name, String phone, String password, Integer uid, Integer state, String openid, BigDecimal commission, BigDecimal wallet) {
-        this.name = name;
-        this.phone = phone;
-        this.password = password;
-        this.uid = uid;
-        this.state = state;
-        this.openid = openid;
-        this.commission = commission;
-        this.wallet = wallet;
-    }
 }

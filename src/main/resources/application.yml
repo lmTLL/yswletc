@@ -30,3 +30,6 @@ fdfs:
 #xml映射路径
 mybatis-plus:
   mapper-locations: classpath:com/yswl/yswletc/dao/mapper/*.xml
+#图片服务器路径
+img:
+  server: http://47.92.86.199:83/

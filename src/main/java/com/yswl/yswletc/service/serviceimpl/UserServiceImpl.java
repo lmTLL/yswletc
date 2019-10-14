@@ -51,10 +51,10 @@ public class UserServiceImpl implements UserService {
         List<User> list = userMapper.selectList(queryWrapper);
         for (User user1 : list) {
             if (user1 != null){
-                return ResultUtil.exec(false,"ERROR","该手机号已注册");
+                return ResultUtil.exec(false,"ERROR","该手机号已存在");
             }
         }
         userMapper.insert(user);
-        return ResultUtil.exec(true,"OK","注册成功");
+        return ResultUtil.exec(true,"OK","邀请成功");
     }
 }

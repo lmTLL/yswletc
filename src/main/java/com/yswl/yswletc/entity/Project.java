@@ -34,5 +34,5 @@ public class Project implements Serializable {
 
     private String qrcodepath; //二维码路径
 
-    private Integer state; //状态
+    private Integer state = 1; //状态 1：可用状态
 }

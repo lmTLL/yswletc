@@ -21,7 +21,11 @@ public class YswletcApplicationTests {
 
     @Test
     public void contextLoads() {
-        User user = new User("张三","156495910","123456",0,1,"1",new BigDecimal("1"),new BigDecimal("1"));
+        User user = new User(null,"张三","156495910","123456",0,1,"1",null,null);
+        BigDecimal bigDecimal = BigDecimal.valueOf((float)1.21);
+        BigDecimal bigDecimal1 = BigDecimal.valueOf((float)50);
+        user.setCommission(bigDecimal);
+        user.setWallet(bigDecimal1);
         userMapper.insert(user);
     }
 
