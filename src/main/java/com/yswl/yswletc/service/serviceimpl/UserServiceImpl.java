@@ -1,6 +1,6 @@
 package com.yswl.yswletc.service.serviceimpl;
 
-import com.yswl.yswletc.common.redis.RedisOperator;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yswl.yswletc.common.utils.ResultUtil;
 import com.yswl.yswletc.common.vo.ResultVo;
 import com.yswl.yswletc.dao.UserMapper;
@@ -9,34 +9,52 @@ import com.yswl.yswletc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
-
-    @Autowired
-    private RedisOperator redis;
-
+    /**
+     * 登入
+     * @param user
+     * @return
+     */
     @Override
     public ResultVo userLogin(User user) {
-        User u = userMapper.selectByName(user.getName());
-        if (u!=null){
-           if (u.getPassword().equals(user.getPassword())){
-               if (u.getPhone().equals(user.getPhone())){
-
-                   redis.set("loginName",
-                           u.getName(),
-                           1000 * 60 * 30);
-                   return ResultUtil.exec(true,"OK","成功登陆");
-               }else {
-                   return ResultUtil.exec(false,"ERROR","手机号不正确，请核对后再试");
-               }
-           }else{
-               return ResultUtil.exec(false,"ERROR","密码不正确，请重新填写");
-           }
-        }else{
-            return ResultUtil.exec(false,"ERROR","用户名无效");
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("phone",user.getPhone());
+        List<User> list = userMapper.selectList(queryWrapper);
+        for (User user1 : list) {
+            if (user1 != null){
+                if(user1.getPassword().equals(user.getPassword())){//密码正确登入成功
+                    user1.setPassword(null);
+                    return ResultUtil.exec(true,"OK",user1);
+                }else {
+                    return ResultUtil.exec(false,"ERROR","密码错误");
+                }
+            }
         }
+        return ResultUtil.exec(false,"ERROR","未找到该用户");
+    }
+
+    /**
+     * 注册
+     * @param user
+     * @return
+     */
+    @Override
+    public ResultVo userRegister(User user) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("phone",user.getPhone());
+        List<User> list = userMapper.selectList(queryWrapper);
+        for (User user1 : list) {
+            if (user1 != null){
+                return ResultUtil.exec(false,"ERROR","该手机号已注册");
+            }
+        }
+        userMapper.insert(user);
+        return ResultUtil.exec(true,"OK","注册成功");
     }
 }

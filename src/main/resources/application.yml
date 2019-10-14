@@ -1,0 +1,31 @@
+server:
+  port: 443
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: yswl2019
+    url: jdbc:mysql://47.92.86.199:3306/db_yswletc?serverTimezone=UTC&characterEncoding=utf8
+  jackson:
+    date-format: yyyy-MM-DD HH:MM:SS
+    time-zone: GMT+8
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+#配置redis
+  redis:
+    host: 47.92.86.199
+    port: 6379
+#配置图片管理器
+fdfs:
+  tracker-list: 47.92.86.199:22122
+  connect-timeout: 10000
+  so-timeout: 10000
+  pool:
+    jmx-enabled: false
+  thumb-image:
+    width: 100
+    height: 100
+mybatis-plus:
+  mapper-locations: classpath:com/yswl/yswletc/dao/mapper/*.xml

@@ -4,7 +4,8 @@ import com.yswl.yswletc.common.vo.ResultVo;
 import com.yswl.yswletc.entity.User;
 
 public interface UserService {
-    //dengl
-    public ResultVo userLogin(User user);
 
+    ResultVo userLogin(User user);
+
+    ResultVo userRegister(User user);
 }

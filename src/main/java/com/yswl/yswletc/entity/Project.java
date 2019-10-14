@@ -1,90 +1,35 @@
 package com.yswl.yswletc.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-
+/**
+ * 项目表
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @TableName(value = "t_projects")
-public class Project {
+public class Project implements Serializable {
 
-    private Integer id;
+    private Integer id; //编号
 
-    private String log;
+    private String log; //log路径
 
-    private String projectname;
+    private String projectname; //项目名称
 
-    private String introduce;
+    private String introduce; //介绍
 
-    private Integer remainders;
+    private Integer remainders; //剩余任务数
 
-    private BigDecimal commission;
+    private BigDecimal commission; //佣金
 
-    private String qrcodepath;
+    private String qrcodepath; //二维码路径
 
-    private Integer state;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getLog() {
-        return log;
-    }
-
-    public void setLog(String log) {
-        this.log = log == null ? null : log.trim();
-    }
-
-    public String getProjectname() {
-        return projectname;
-    }
-
-    public void setProjectname(String projectname) {
-        this.projectname = projectname == null ? null : projectname.trim();
-    }
-
-    public String getintroduce() {
-        return introduce;
-    }
-
-    public void setintroduce(String introduce) {
-        this.introduce = introduce == null ? null : introduce.trim();
-    }
-
-    public Integer getRemainders() {
-        return remainders;
-    }
-
-    public void setRemainders(Integer remainders) {
-        this.remainders = remainders;
-    }
-
-    public BigDecimal getCommission() {
-        return commission;
-    }
-
-    public void setCommission(BigDecimal commission) {
-        this.commission = commission;
-    }
-
-    public String getQrcodepath() {
-        return qrcodepath;
-    }
-
-    public void setQrcodepath(String qrcodepath) {
-        this.qrcodepath = qrcodepath == null ? null : qrcodepath.trim();
-    }
-
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
-    }
+    private Integer state; //状态
 }

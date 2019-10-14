@@ -16,12 +16,16 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/userLogin.do")
+    @PostMapping("/user/login.do")
     public ResultVo userLogin(User user){
         System.out.println("登陆UserController"+redis.get("loginName"));
-
         return userService.userLogin(user);
     }
+    @PostMapping("/user/register.do")
+    public ResultVo userRegister(User user){
+        return userService.userRegister(user);
+    }
+
 
 
 

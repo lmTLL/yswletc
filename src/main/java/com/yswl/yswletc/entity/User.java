@@ -1,90 +1,35 @@
 package com.yswl.yswletc.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+/**
+ * 用户表
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @TableName(value = "t_user")
 public class User implements Serializable {
 
-    private Integer id;
+    private Integer id; //编号
 
-    private String name;
+    private String name; //姓名
 
-    private String password;
+    private String phone; //手机
 
-    private String phone;
+    private String password; //密码
 
-    private Integer project;
+    private BigDecimal commission; //佣金
 
-    private BigDecimal commission;
+    private Integer uid; //上级id
 
-    private Integer recommender;
+    private Integer state; //状态
 
-    private Integer state;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
-    }
-
-    public Integer getProject() {
-        return project;
-    }
-
-    public void setProject(Integer project) {
-        this.project = project;
-    }
-
-    public BigDecimal getCommission() {
-        return commission;
-    }
-
-    public void setCommission(BigDecimal commission) {
-        this.commission = commission;
-    }
-
-    public Integer getRecommender() {
-        return recommender;
-    }
-
-    public void setRecommender(Integer recommender) {
-        this.recommender = recommender;
-    }
-
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
-    }
+    private String openid; //用户标识
 }

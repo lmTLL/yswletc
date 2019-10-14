@@ -2,97 +2,36 @@ package com.yswl.yswletc.entity;
 
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
+/**
+ * 业绩表
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @TableName(value = "t_achievement")
-public class Achievement {
+public class Achievement implements Serializable {
 
-    private Integer id;
+    private Integer id; //编号
 
-    private String username;
+    private String uid; //当前提交用户id
 
-    private String name;
+    private String username; //用户名
 
-    private String phone;
+    private String phone; //手机号
 
-    private Integer project;
+    private Integer project; //项目表Id
 
-    private String carid;
+    private String carid; //车牌号
 
-    private String picturepath;
+    private String picturepath; //图片路径
 
-    private String remarks;
+    private String remarks; //备注
 
-    private Integer state;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
-    }
-
-    public Integer getProject() {
-        return project;
-    }
-
-    public void setProject(Integer project) {
-        this.project = project;
-    }
-
-    public String getCarid() {
-        return carid;
-    }
-
-    public void setCarid(String carid) {
-        this.carid = carid == null ? null : carid.trim();
-    }
-
-    public String getPicturepath() {
-        return picturepath;
-    }
-
-    public void setPicturepath(String picturepath) {
-        this.picturepath = picturepath == null ? null : picturepath.trim();
-    }
-
-    public String getRemarks() {
-        return remarks;
-    }
-
-    public void setRemarks(String remarks) {
-        this.remarks = remarks == null ? null : remarks.trim();
-    }
-
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
-    }
+    private Integer state; //审核状态
 }
