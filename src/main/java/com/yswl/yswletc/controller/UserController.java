@@ -18,7 +18,6 @@ public class UserController {
 
     @PostMapping("/user/login.do")
     public ResultVo userLogin(User user){
-        System.out.println("登陆UserController"+redis.get("loginName"));
         return userService.userLogin(user);
     }
     @PostMapping("/user/register.do")

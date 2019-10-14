@@ -1,5 +1,7 @@
 package com.yswl.yswletc.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +19,7 @@ import java.math.BigDecimal;
 @TableName(value = "t_projects")
 public class Project implements Serializable {
 
+    @TableId(type = IdType.AUTO)
     private Integer id; //编号
 
     private String log; //log路径

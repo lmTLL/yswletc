@@ -27,5 +27,6 @@ fdfs:
   thumb-image:
     width: 100
     height: 100
+#xml映射路径
 mybatis-plus:
   mapper-locations: classpath:com/yswl/yswletc/dao/mapper/*.xml
