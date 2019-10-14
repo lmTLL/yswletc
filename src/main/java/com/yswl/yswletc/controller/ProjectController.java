@@ -13,7 +13,7 @@ public class ProjectController {
     private ProjectService projectService;
 
     @GetMapping("/project/queryAll")
-    public ResultVo uploadImg() {
+    public ResultVo projectQueryAll() {
         return projectService.queryProject();
     }
 

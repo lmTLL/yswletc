@@ -5,6 +5,7 @@ import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.yswl.yswletc.common.utils.ResultUtil;
 import com.yswl.yswletc.common.vo.ResultVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -19,8 +20,12 @@ import java.util.Map;
  */
 public class ResUtils {
 
+    @Value("${img.server}")
+    private String imgPath;
+
     @Autowired
     private FastFileStorageClient fastFileStorageClient;
+
 
     public synchronized ResultVo uploadPictures(MultipartFile file){
         Map<String, String> map = new HashMap<>();
@@ -41,7 +46,7 @@ public class ResUtils {
                     houzui,
                     null
             );
-            map.put("filepath", storePath.getFullPath());
+            map.put("filepath",imgPath+storePath.getFullPath());
             return ResultUtil.exec(true,"OK",map);
         } catch (IOException e) {
             e.printStackTrace();

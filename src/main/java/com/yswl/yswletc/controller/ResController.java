@@ -24,24 +24,31 @@ public class ResController {
         ResUtils resUtils = new ResUtils();
         return resUtils.uploadPictures(file);
     }
+
+
+    /**
+     * 测试接口
+     * @param user
+     * @return
+     */
     @PostMapping("/testll")
     public ResultVo userLogin(User user) {
         user.setPassword("123456");
-            QueryWrapper queryWrapper = new QueryWrapper();
-            queryWrapper.eq("phone",156495910);
-            List<User> list = userMapper.selectList(queryWrapper);
-            for (User user1 : list) {
-                if (user1 != null){
-                    if(user1.getPassword().equals(user.getPassword())){//密码正确登入成功
-                        user1.setPassword(null);
-                        return ResultUtil.exec(true,"OK",user1);
-                    }else {
-                        return ResultUtil.exec(false,"ERROR","密码错误");
-                    }
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("phone",156495910);
+        List<User> list = userMapper.selectList(queryWrapper);
+        for (User user1 : list) {
+            if (user1 != null){
+                if(user1.getPassword().equals(user.getPassword())){//密码正确登入成功
+                    user1.setPassword(null);
+                    return ResultUtil.exec(true,"OK",user1);
+                }else {
+                    return ResultUtil.exec(false,"ERROR","密码错误");
                 }
             }
-            return ResultUtil.exec(false,"ERROR","未找到该用户");
         }
+        return ResultUtil.exec(false,"ERROR","未找到该用户");
+    }
 
 }
 
