@@ -1,24 +1,30 @@
 package com.yswl.yswletc;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.yswl.yswletc.common.utils.ResultUtil;
+import com.github.tobato.fastdfs.domain.StorePath;
+import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.yswl.yswletc.dao.ProjectMapper;
 import com.yswl.yswletc.dao.UserMapper;
 import com.yswl.yswletc.entity.Project;
 import com.yswl.yswletc.entity.User;
-import lombok.AllArgsConstructor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class YswletcApplicationTests {
+
+    @Autowired
+    private FastFileStorageClient fastFileStorageClient;
 
     @Autowired
     private UserMapper userMapper;
@@ -61,6 +67,23 @@ public class YswletcApplicationTests {
             }else {
                 System.out.println("您提供的手机号有误");
             }
+        }
+    }
+    @Test
+    public void contextLoads3(){
+        File file = new File("D:\\壁纸\\桂林山水风景图片,桂林山水全景图,桂林山水风景6K高清大图_彼岸图网.jpg");
+        try {
+            synchronized (this){
+                StorePath storePath = fastFileStorageClient.uploadImageAndCrtThumbImage(
+                        new FileInputStream(file),
+                        file.length(),
+                        "jpg",
+                        null
+                );
+                System.out.println("上传图片路径为："+storePath.getFullPath());}
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("发生了错误");
         }
     }
 }
