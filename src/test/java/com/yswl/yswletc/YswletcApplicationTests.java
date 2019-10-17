@@ -3,8 +3,10 @@ package com.yswl.yswletc;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.tobato.fastdfs.domain.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
+import com.yswl.yswletc.dao.AchievementMapper;
 import com.yswl.yswletc.dao.ProjectMapper;
 import com.yswl.yswletc.dao.UserMapper;
+import com.yswl.yswletc.entity.Achievement;
 import com.yswl.yswletc.entity.Project;
 import com.yswl.yswletc.entity.User;
 import org.junit.Test;
@@ -17,6 +19,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -32,14 +35,12 @@ public class YswletcApplicationTests {
     @Autowired
     private ProjectMapper projectMapper;
 
+    @Autowired
+    private AchievementMapper achievementMapper;
+
     @Test
     public void contextLoads() {
-        User user = new User(null,"张三","156495910","123456",0,1,"1",null,null);
-        BigDecimal bigDecimal = BigDecimal.valueOf((float)1.21);
-        BigDecimal bigDecimal1 = BigDecimal.valueOf((float)50);
-        user.setCommission(bigDecimal);
-        user.setWallet(bigDecimal1);
-        userMapper.insert(user);
+
     }
     @Test
     public void contextLoads1(){
@@ -84,6 +85,14 @@ public class YswletcApplicationTests {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.out.println("发生了错误");
+        }
+    }
+    @Test
+    public void contextLoads4() {
+        List<User> users = userMapper.selectList(null);
+        for (User user : users) {
+            user.setJoindate(new Date());
+            userMapper.updateById(user);
         }
     }
 }

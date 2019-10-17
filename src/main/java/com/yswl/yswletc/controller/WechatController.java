@@ -17,7 +17,8 @@ import java.util.TreeSet;
 @CrossOrigin
 @RequestMapping("/wechat")
 public class WechatController {
-    private static final String TOKNG = "*****";//微信服务号设置的令牌
+
+    private static final String TOKNG = "*****";//微信服务号令牌
      /**
      *  微信接入入口
      * @return

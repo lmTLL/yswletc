@@ -17,5 +17,4 @@ public class YswletcApplication {
     public static void main(String[] args) {
         SpringApplication.run(YswletcApplication.class, args);
     }
-
 }

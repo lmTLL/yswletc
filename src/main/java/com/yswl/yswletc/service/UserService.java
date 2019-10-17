@@ -10,4 +10,10 @@ public interface UserService {
     ResultVo userRegister(User user);
 
     ResultVo userAlterPassword(String name, String phone, String password, String newPassword);
+
+    ResultVo userUpdataCommissionById(User user);
+
+    ResultVo userMyteamById(Integer id);
+
+    ResultVo userQueryAll();
 }

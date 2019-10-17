@@ -7,8 +7,11 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 业绩表
@@ -22,13 +25,15 @@ public class Achievement implements Serializable {
     @TableId(type = IdType.AUTO)
     private Integer id; //编号
 
-    private String uid; //当前提交用户id
+    private Integer uid; //当前提交用户id
 
     private String username; //用户名
 
     private String phone; //手机号
 
-    private Integer project; //项目表Id
+    private Integer pid; //项目id
+
+    private String itemname; //项目名
 
     private String carid; //车牌号
 
@@ -36,5 +41,10 @@ public class Achievement implements Serializable {
 
     private String remarks; //备注
 
-    private Integer state = 0; //审核状态：0待审核  1已审核
+    private BigDecimal commission; //奖金
+
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date submittime; //提交时间
+
+    private Integer state = 0; //审核状态：0待审核  1审核通过  2审核不通过
 }

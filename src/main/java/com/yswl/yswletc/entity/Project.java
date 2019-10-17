@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 项目表
@@ -34,5 +35,9 @@ public class Project implements Serializable {
 
     private String qrcodepath; //二维码路径
 
-    private Integer state = 1; //状态 1：可用状态
+    private String documentpath; //帮助文档路径
+
+    private Date joindate; //创建时间
+
+    private Integer state = 1; //状态 1：可用状态 0:不可用状态
 }

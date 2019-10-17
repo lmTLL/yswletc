@@ -1,6 +1,7 @@
 package com.yswl.yswletc.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 用户表
@@ -30,6 +32,9 @@ public class User implements Serializable {
 
     private Integer uid; //上级id
 
+    @TableField(exist = false)
+    private String uname; //上级姓名
+
     private Integer state = 1; //状态
 
     private String openid; //用户标识
@@ -37,4 +42,10 @@ public class User implements Serializable {
     private BigDecimal commission; //佣金
 
     private BigDecimal wallet; //钱包
+
+    private Date joindate; //注册时间
+
+    @TableField(exist = false)
+    private Integer Today; //今日业绩
+
 }

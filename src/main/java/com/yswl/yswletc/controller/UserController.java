@@ -1,11 +1,13 @@
 package com.yswl.yswletc.controller;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.yswl.yswletc.common.redis.RedisOperator;
 import com.yswl.yswletc.common.vo.ResultVo;
 import com.yswl.yswletc.entity.User;
 import com.yswl.yswletc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,15 +24,28 @@ public class UserController {
     public ResultVo userLogin(User user){
         return userService.userLogin(user);
     }
+
     @PostMapping("/user/register.do")
     public ResultVo userRegister(User user){
         return userService.userRegister(user);
     }
 
-
     @PostMapping("/user/alterPassword.do")
     public ResultVo userAlterPassword(String name,String phone,String password,String newPassword){
         return userService.userAlterPassword(name,phone,password,newPassword);
     }
+    @PostMapping("/user/updataCommissionById.do")
+    public ResultVo userUpdataCommissionById(User user){
+        return userService.userUpdataCommissionById(user);
+    }
+    @GetMapping("/user/myteamById.do")
+    public ResultVo userMyteamById(Integer id){
+        return userService.userMyteamById(id);
+    }
 
+    //=====================================================后台管理接口
+    @GetMapping("/user/queryAll.do")
+    public ResultVo userQueryAll(){
+       return userService.userQueryAll();
+    }
 }
