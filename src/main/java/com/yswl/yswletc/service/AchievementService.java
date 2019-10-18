@@ -10,4 +10,6 @@ public interface AchievementService {
     ResultVo achievementqueryByUid(Integer uid);
 
     ResultVo AchievementQueryAll();
+
+    ResultVo achievementQueryByCondition(String itemname, String uname, String username, String phone, String carid, Integer state, Integer day, Integer current, Integer size);
 }

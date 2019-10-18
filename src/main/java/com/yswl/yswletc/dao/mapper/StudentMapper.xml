@@ -12,6 +12,4 @@
     SELECT * FROM t_student
     where DATE_SUB(CURDATE(), INTERVAL #{day,jdbcType=INTEGER} DAY) <![CDATA[ <= ]]> date(birthday);
   </select>
-  <insert id="insertList" parameterType="java.util.List">
-  </insert>
 </mapper>

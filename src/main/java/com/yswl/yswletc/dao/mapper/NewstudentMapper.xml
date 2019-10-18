@@ -11,11 +11,19 @@
   <delete id="deleteAll">
         delete from t_newstudent
     </delete>
+
   <insert id="insertAll" parameterType="java.util.List">
     INSERT INTO t_newstudent(id,name,age,phone,birthday)
     VALUES
     <foreach collection="list" item="item" index="index" separator="," >
-      (#{item.id},#{item.name},#{item.age},#{item.phone},#{item.birthday})
+      (
+      #{item.id},
+      #{item.name},
+      #{item.age},
+      #{item.phone},
+      #{item.birthday}
+      )
     </foreach>
   </insert>
+
 </mapper>

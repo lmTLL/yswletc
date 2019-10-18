@@ -13,7 +13,6 @@ import java.util.List;
  */
 public interface StudentMapper extends BaseMapper<Student> {
 
-    List<Student> queryStudentByDay(Integer day);
+    List<Student> queryStudentByDay(Integer day); //查询近几天的数据
 
-    Integer insertList(List<Student> lists);
 }

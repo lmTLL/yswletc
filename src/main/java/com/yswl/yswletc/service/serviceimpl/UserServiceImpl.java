@@ -60,7 +60,6 @@ public class UserServiceImpl implements UserService {
                 return ResultUtil.exec(false,"ERROR","该手机号已存在");
             }
         }
-        userMapper.s
         user.setJoindate(new Date());
         userMapper.insert(user);
         return ResultUtil.exec(true,"OK","邀请成功");

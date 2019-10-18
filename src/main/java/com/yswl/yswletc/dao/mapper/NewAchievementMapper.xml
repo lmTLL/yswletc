@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yswl.yswletc.dao.AchievementMapper">
-    <resultMap id="BaseResultMap" type="com.yswl.yswletc.entity.Achievement" >
+<mapper namespace="com.yswl.yswletc.dao.NewAchievementMapper">
+    <resultMap id="BaseResultMap" type="com.yswl.yswletc.entity.NewAchievement" >
         <id column="id" property="id" jdbcType="INTEGER" />
         <result column="uid" property="uid" jdbcType="INTEGER" />
         <result column="uname" property="uname" jdbcType="VARCHAR" />
@@ -16,15 +16,23 @@
         <result column="Submittime" property="submittime" jdbcType="TIMESTAMP" />
         <result column="state" property="state" jdbcType="INTEGER" />
     </resultMap>
-    <select id="selectAllAchievementByTime" resultType="com.yswl.yswletc.entity.Achievement">
-        select *
-        from t_achievement
-        where to_days(Submittime) = to_days(now())
-        and uid = #{uid,jdbcType=INTEGER}
-    </select>
+    <delete id="deleteAll">
+        truncate table t_newachievement
+    </delete>
 
-    <select id="queryAchievementByDay" resultType="com.yswl.yswletc.entity.Achievement">
-    SELECT * FROM t_achievement
-    where DATE_SUB(CURDATE(), INTERVAL #{day,jdbcType=INTEGER} DAY) <![CDATA[ <= ]]> date(submittime);
-  </select>
+    <insert id="insertAll" parameterType="com.yswl.yswletc.entity.NewAchievement">
+      INSERT INTO t_newachievement (id, uid, uname,
+      pid, username, phone,
+      itemname, carid, picturepath,
+      remarks, commission, Submittime,
+      state)
+      VALUES
+      <foreach collection="list" item="item" index="index" separator="," >
+      (#{item.id,jdbcType=INTEGER}, #{item.uid,jdbcType=INTEGER}, #{item.uname,jdbcType=VARCHAR},
+      #{item.pid,jdbcType=INTEGER}, #{item.username,jdbcType=VARCHAR}, #{item.phone,jdbcType=VARCHAR},
+      #{item.itemname,jdbcType=VARCHAR}, #{item.carid,jdbcType=VARCHAR}, #{item.picturepath,jdbcType=VARCHAR},
+      #{item.remarks,jdbcType=VARCHAR}, #{item.commission,jdbcType=DECIMAL}, #{item.submittime,jdbcType=TIMESTAMP},
+      #{item.state,jdbcType=INTEGER})
+      </foreach>
+    </insert>
 </mapper>

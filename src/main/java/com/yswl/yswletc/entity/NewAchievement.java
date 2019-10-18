@@ -18,13 +18,14 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName(value = "t_achievement")
+@TableName(value = "t_newachievement")
 public class NewAchievement implements Serializable {
 
-    @TableId(type = IdType.AUTO)
     private Integer id; //编号
 
     private Integer uid; //当前提交用户id
+
+    private String uname; //提交的用户姓名
 
     private String username; //用户名
 

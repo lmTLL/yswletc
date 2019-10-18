@@ -17,5 +17,5 @@ public interface NewStudentMapper extends BaseMapper<NewStudent> {
 
     Integer deleteAll();//删除所有数据
 
-    Integer insertAll(List<Student> lists);
+    Integer insertAll(List<Student> lists); //批量插入
 }

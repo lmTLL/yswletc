@@ -1,12 +1,16 @@
 package com.yswl.yswletc.service.serviceimpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yswl.yswletc.common.utils.ResultUtil;
 import com.yswl.yswletc.common.vo.ResultVo;
 import com.yswl.yswletc.dao.AchievementMapper;
+import com.yswl.yswletc.dao.NewAchievementMapper;
 import com.yswl.yswletc.dao.ProjectMapper;
 import com.yswl.yswletc.dao.UserMapper;
 import com.yswl.yswletc.entity.Achievement;
+import com.yswl.yswletc.entity.NewAchievement;
 import com.yswl.yswletc.entity.Project;
 import com.yswl.yswletc.entity.User;
 import com.yswl.yswletc.service.AchievementService;
@@ -24,6 +28,9 @@ public class AchieventmentServiceImpl implements AchievementService {
     private AchievementMapper achievementMapper;
 
     @Autowired
+    private NewAchievementMapper newAchievementMapper;
+
+    @Autowired
     private UserMapper userMapper;
 
     @Autowired
@@ -35,6 +42,7 @@ public class AchieventmentServiceImpl implements AchievementService {
     @Override
     public ResultVo achievementSubmit(Achievement achievement) {
         User user = userMapper.selectById(achievement.getUid());
+        String uname = user.getUname();//当前用户姓名
         BigDecimal umoney = user.getCommission(); //当前用户的佣金
 
         QueryWrapper queryWrapper = new QueryWrapper();
@@ -47,6 +55,7 @@ public class AchieventmentServiceImpl implements AchievementService {
         try {
             achievement.setSubmittime(new Date());
             achievement.setCommission(umoney.add(pmoney));
+            achievement.setUname(uname);
             achievementMapper.insert(achievement);
             return ResultUtil.exec(true, "OK", "提交成功");
         }catch (Exception e){
@@ -81,6 +90,47 @@ public class AchieventmentServiceImpl implements AchievementService {
         }catch (Exception e){
             e.printStackTrace();
             return ResultUtil.exec(false, "ERROR", "网络错误");
+        }
+    }
+
+    @Override
+    public ResultVo achievementQueryByCondition(String itemname, String uname, String username, String phone, String carid, Integer state, Integer day, Integer current, Integer size) {
+        try {
+            //按时间查找并写入虚拟表
+            List<Achievement> lists = achievementMapper.queryAchievementByDay(day);
+            Integer integer = newAchievementMapper.insertAll(lists);
+            //对虚拟表进行条件查询
+            if (current == null || size == null){
+                current =1;
+                size = 99999;
+            }
+            IPage<NewAchievement> page = new Page<NewAchievement>(current,size);
+            QueryWrapper queryWrapper = new QueryWrapper();
+            if (itemname != null){
+                queryWrapper.eq("itemname",itemname);
+            }
+            if (uname != null){
+                queryWrapper.eq("uname",uname);
+            }
+            if (username != null){
+                queryWrapper.eq("username",username);
+            }
+            if (phone != null){
+                queryWrapper.eq("phone",phone);
+            }
+            if (carid != null){
+                queryWrapper.eq("carud",carid);
+            }
+            if (state != null){
+                queryWrapper.eq("state",state);
+            }
+            IPage iPage = newAchievementMapper.selectPage(page, queryWrapper);
+            return ResultUtil.exec(true,"OK",iPage);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultUtil.exec(false,"ERROR","网络错误");
+        }finally {
+            newAchievementMapper.deleteAll(); //清空虚拟表
         }
     }
 }

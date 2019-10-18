@@ -27,7 +27,12 @@ public class AchievementController {
     }
 
     @GetMapping("/Achievement/queryAll")
-    public ResultVo AchievementQueryAll(){
+    public ResultVo achievementQueryAll(){
         return achievementService.AchievementQueryAll();
     }
+    @GetMapping("/Achievement/queryByCondition")
+    public ResultVo achievementQueryByCondition(String itemname,String uname,String username,String phone,String carid,Integer state,Integer day,Integer current,Integer size){
+        return achievementService.achievementQueryByCondition(itemname,uname,username,phone,carid,state,day,current,size);
+    }
+
 }
