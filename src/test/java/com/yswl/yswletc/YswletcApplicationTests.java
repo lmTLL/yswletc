@@ -1,14 +1,12 @@
 package com.yswl.yswletc;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.tobato.fastdfs.domain.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
-import com.yswl.yswletc.dao.AchievementMapper;
-import com.yswl.yswletc.dao.ProjectMapper;
-import com.yswl.yswletc.dao.UserMapper;
-import com.yswl.yswletc.entity.Achievement;
-import com.yswl.yswletc.entity.Project;
-import com.yswl.yswletc.entity.User;
+import com.yswl.yswletc.dao.*;
+import com.yswl.yswletc.entity.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +35,13 @@ public class YswletcApplicationTests {
 
     @Autowired
     private AchievementMapper achievementMapper;
+
+    @Autowired
+    private StudentMapper studentMapper;
+
+    @Autowired
+    private NewStudentMapper newStudentMapper;
+
 
     @Test
     public void contextLoads() {
@@ -89,10 +94,58 @@ public class YswletcApplicationTests {
     }
     @Test
     public void contextLoads4() {
-        List<User> users = userMapper.selectList(null);
-        for (User user : users) {
-            user.setJoindate(new Date());
-            userMapper.updateById(user);
-        }
+        NewStudent newStudent = new NewStudent();
+        List<Student> lists = studentMapper.queryStudentByDay(1);
+        newStudentMapper.insertAll(lists);
     }
+    @Test
+    public void contextLoads5() {
+        Student student = new Student();
+        for (int i = 0; i < 10; i++) {
+            student.setBirthday(new Date());
+            student.setAge(i);
+            student.setName("王麻"+i);
+            student.setPhone(""+i);
+            studentMapper.insert(student);
+        }
+
+    }
+    @Test
+    public void contextLoads6() {
+        newStudentMapper.deleteAll();
+    }
+    @Test
+    public void contextLoads7() {
+        NewStudent newStudent = new NewStudent();
+        List<Student> lists = studentMapper.queryStudentByDay(1);
+        long startTime = System.currentTimeMillis();
+        for (Student student : lists) {
+            newStudent.setAge(student.getAge());
+            newStudent.setBirthday(student.getBirthday());
+            newStudent.setName(student.getName());
+            newStudent.setPhone(student.getPhone());
+            newStudent.setId(student.getId());
+            newStudentMapper.insert(newStudent);
+        }
+        long endTime = System.currentTimeMillis();
+        float seconds = (endTime - startTime) / 1000F;
+        System.out.println(Float.toString(seconds) + " seconds.");
+    }
+    @Test
+    public void contextLoads8() {
+        NewStudent newStudent = new NewStudent();
+        List<Student> lists = studentMapper.queryStudentByDay(1);
+        long startTime = System.currentTimeMillis();
+        newStudentMapper.insertAll(lists);
+        long endTime = System.currentTimeMillis();
+        float seconds = (endTime - startTime) / 1000F;
+        System.out.println(Float.toString(seconds) + " seconds.");
+    }
+    @Test
+    public void contextLoads9() {
+        IPage<Student> page = new Page<Student>(1,2);
+        IPage<Student> page1 = studentMapper.selectPage(page, null);
+        System.out.println(page1.toString());
+    }
+
 }

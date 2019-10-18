@@ -1,11 +1,13 @@
 package com.yswl.yswletc;
 
 
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.github.tobato.fastdfs.FdfsClientConfig;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
 @MapperScan("com.yswl.yswletc.dao")
@@ -16,5 +18,9 @@ public class YswletcApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(YswletcApplication.class, args);
+    }
+    @Bean
+    public PaginationInterceptor paginationInterceptor() {
+        return new PaginationInterceptor();
     }
 }

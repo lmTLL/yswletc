@@ -20,10 +20,12 @@ public class AchievementController {
     public ResultVo achievementSubmit(Achievement achievement) {
         return achievementService.achievementSubmit(achievement);
     }
+
     @GetMapping("/Achievement/queryByUid")
     public ResultVo achievementqueryByUid(Integer uid) {
         return achievementService.achievementqueryByUid(uid);
     }
+
     @GetMapping("/Achievement/queryAll")
     public ResultVo AchievementQueryAll(){
         return achievementService.AchievementQueryAll();

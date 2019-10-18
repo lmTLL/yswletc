@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -32,7 +33,6 @@ public class User implements Serializable {
 
     private Integer uid; //上级id
 
-    @TableField(exist = false)
     private String uname; //上级姓名
 
     private Integer state = 1; //状态
@@ -43,6 +43,7 @@ public class User implements Serializable {
 
     private BigDecimal wallet; //钱包
 
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date joindate; //注册时间
 
     @TableField(exist = false)

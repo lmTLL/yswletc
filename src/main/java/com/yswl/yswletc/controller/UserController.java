@@ -1,6 +1,5 @@
 package com.yswl.yswletc.controller;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.yswl.yswletc.common.redis.RedisOperator;
 import com.yswl.yswletc.common.vo.ResultVo;
 import com.yswl.yswletc.entity.User;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin
 public class UserController {
+
     @Autowired
     private RedisOperator redis;
 
@@ -43,9 +43,9 @@ public class UserController {
         return userService.userMyteamById(id);
     }
 
-    //=====================================================后台管理接口
-    @GetMapping("/user/queryAll.do")
-    public ResultVo userQueryAll(){
-       return userService.userQueryAll();
+    //=================================后台管理接口
+    @GetMapping("/user/queryAllByPaging.do")
+    public ResultVo userQueryAllByPaging(Integer current, Integer size,String name,String phone){
+       return userService.userQueryAllByPaging(current,size,name,phone);
     }
 }

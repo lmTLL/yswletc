@@ -10,5 +10,4 @@ public interface AchievementMapper extends BaseMapper<Achievement> {
     List<Achievement> selectAllAchievementByTime(Integer uid);//查看当前用户今天业绩接口
 
 
-
 }

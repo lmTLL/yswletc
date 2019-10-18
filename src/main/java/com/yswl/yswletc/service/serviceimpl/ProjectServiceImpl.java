@@ -44,7 +44,7 @@ public class ProjectServiceImpl implements ProjectService {
             queryWrapper.eq("id", id);
             List<Project> list = projectMapper.selectList(queryWrapper);
             Project project = list.get(0);
-            return ResultUtil.exec(false, "ERROR", project);
+            return ResultUtil.exec(true, "OK", project);
         } catch (Exception e) {
             return ResultUtil.exec(false, "ERROR", "网络错误");
         }
@@ -100,7 +100,6 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ResultVo projectUpdate(Project project) {
         try {
-
             Project project1 = projectMapper.selectById(project.getId());
             project1.setLog(project.getLog());
             project1.setProjectname(project.getProjectname());

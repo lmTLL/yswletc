@@ -15,5 +15,5 @@ public interface UserService {
 
     ResultVo userMyteamById(Integer id);
 
-    ResultVo userQueryAll();
+    ResultVo userQueryAllByPaging(Integer current, Integer size,String name,String phone);
 }

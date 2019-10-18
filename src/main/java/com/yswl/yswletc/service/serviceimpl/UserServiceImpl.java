@@ -1,6 +1,8 @@
 package com.yswl.yswletc.service.serviceimpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yswl.yswletc.common.utils.ResultUtil;
 import com.yswl.yswletc.common.vo.ResultVo;
 import com.yswl.yswletc.dao.AchievementMapper;
@@ -58,6 +60,7 @@ public class UserServiceImpl implements UserService {
                 return ResultUtil.exec(false,"ERROR","该手机号已存在");
             }
         }
+        userMapper.s
         user.setJoindate(new Date());
         userMapper.insert(user);
         return ResultUtil.exec(true,"OK","邀请成功");
@@ -155,21 +158,17 @@ public class UserServiceImpl implements UserService {
      *查询所有用户列表
      */
     @Override
-    public ResultVo userQueryAll() {
-        try {
-            List<User> list = userMapper.selectList(null);
-            for (User user : list) {
-                QueryWrapper queryWrapper = new QueryWrapper();
-                queryWrapper.eq("uid",user.getUid());
-                List<User> fuser = userMapper.selectList(queryWrapper);//查询上级用户
-                for (User user1 : fuser) {
-                    user.setUname(user1.getName());
-                    user.setPassword(null);
-                }
-            }
-            return ResultUtil.exec(true, "OK",list);
-        }catch (Exception e){
-            return ResultUtil.exec(false, "ERROR", "网络错误");
+    public ResultVo userQueryAllByPaging(Integer current, Integer size,String name,String phone) {
+        IPage<User> page = new Page<User>(current,size);
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("state",1);
+        if (name != null){
+            queryWrapper.eq("name",name);
         }
+        if (phone != null){
+            queryWrapper.eq("phone",phone);
+        }
+        IPage iPage = userMapper.selectPage(page, queryWrapper);
+        return ResultUtil.exec(true, "OK",iPage);
     }
 }

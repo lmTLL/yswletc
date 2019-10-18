@@ -6,23 +6,29 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * User: jang
  * Date: 2019/10/17
- * Time: 9:02
+ * Time: 12:51
  * Description: No Description
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName(value = "t_administrator")
-public class Administrator implements Serializable {
+@TableName(value = "t_newstudent")
+public class NewStudent implements Serializable {
 
     private Integer id;
 
-    private String username;
+    private String name;
 
-    private String password;
+    private Integer age;
+
+    private String phone;
+
+    private Date birthday;
 
 }
+

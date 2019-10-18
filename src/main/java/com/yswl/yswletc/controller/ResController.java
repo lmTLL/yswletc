@@ -1,11 +1,14 @@
 package com.yswl.yswletc.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.tobato.fastdfs.domain.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.yswl.yswletc.common.utils.ResultUtil;
 import com.yswl.yswletc.common.vo.ResultVo;
+import com.yswl.yswletc.dao.StudentMapper;
 import com.yswl.yswletc.dao.UserMapper;
-import com.yswl.yswletc.entity.User;
+import com.yswl.yswletc.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,6 +28,8 @@ public class ResController {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private StudentMapper studentMapper;
 
     @Autowired
     private FastFileStorageClient fastFileStorageClient;
@@ -55,12 +60,13 @@ public class ResController {
 
     /**
      * 测试接口
-     * @param user
      * @return
      */
     @PostMapping("/testll")
-    public ResultVo userLogin(User user) {
-        return ResultUtil.exec(false,"ERROR","2333");
+    public ResultVo userLogin() {
+        IPage<Student> page = new Page<Student>(1,2);
+        IPage<Student> page1 = studentMapper.selectPage(page, null);
+        return ResultUtil.exec(true,"REEOR",page1);
     }
 
 }

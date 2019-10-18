@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -31,13 +32,17 @@ public class Project implements Serializable {
 
     private Integer remainders; //剩余任务数
 
+
     private BigDecimal commission; //佣金
 
     private String qrcodepath; //二维码路径
 
     private String documentpath; //帮助文档路径
 
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date joindate; //创建时间
 
     private Integer state = 1; //状态 1：可用状态 0:不可用状态
+
+    private Integer additionnumber; //总任务数
 }

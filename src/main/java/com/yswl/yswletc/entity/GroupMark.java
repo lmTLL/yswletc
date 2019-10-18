@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * User: jang
  * Date: 2019/10/15
@@ -13,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GroupMark {
+public class GroupMark implements Serializable {
 
     private Integer myScore; //我的业绩
 
