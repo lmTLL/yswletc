@@ -6,7 +6,6 @@ import com.yswl.yswletc.common.vo.ResultVo;
 import com.yswl.yswletc.dao.AdministratorMapper;
 import com.yswl.yswletc.entity.Administrator;
 import com.yswl.yswletc.service.AdministratorService;
-import jdk.nashorn.internal.runtime.linker.LinkerCallSite;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

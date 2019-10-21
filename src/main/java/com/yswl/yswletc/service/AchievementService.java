@@ -12,4 +12,6 @@ public interface AchievementService {
     ResultVo AchievementQueryAll();
 
     ResultVo achievementQueryByCondition(String itemname, String uname, String username, String phone, String carid, Integer state, Integer day, Integer current, Integer size);
+
+    ResultVo achievementQueryById(Integer id);
 }

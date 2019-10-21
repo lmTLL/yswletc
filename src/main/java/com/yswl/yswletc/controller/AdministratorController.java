@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin
 public class AdministratorController {
+
     @Autowired
     private AdministratorService administratorService;
 

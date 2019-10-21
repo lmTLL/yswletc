@@ -34,5 +34,9 @@ public class AchievementController {
     public ResultVo achievementQueryByCondition(String itemname,String uname,String username,String phone,String carid,Integer state,Integer day,Integer current,Integer size){
         return achievementService.achievementQueryByCondition(itemname,uname,username,phone,carid,state,day,current,size);
     }
+    @GetMapping("/Achievement/queryById")
+    public ResultVo achievementQueryById(Integer id){
+        return achievementService.achievementQueryById(id);
+    }
 
 }

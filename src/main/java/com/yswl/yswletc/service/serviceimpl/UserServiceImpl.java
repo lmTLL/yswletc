@@ -161,10 +161,10 @@ public class UserServiceImpl implements UserService {
         IPage<User> page = new Page<User>(current,size);
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("state",1);
-        if (name != null){
+        if (name != null && name != ""){
             queryWrapper.eq("name",name);
         }
-        if (phone != null){
+        if (phone != null && phone != ""){
             queryWrapper.eq("phone",phone);
         }
         IPage iPage = userMapper.selectPage(page, queryWrapper);

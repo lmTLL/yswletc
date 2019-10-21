@@ -106,19 +106,19 @@ public class AchieventmentServiceImpl implements AchievementService {
             }
             IPage<NewAchievement> page = new Page<NewAchievement>(current,size);
             QueryWrapper queryWrapper = new QueryWrapper();
-            if (itemname != null){
+            if (itemname != "" && itemname != null){
                 queryWrapper.eq("itemname",itemname);
             }
-            if (uname != null){
+            if (uname != "" && uname != null){
                 queryWrapper.eq("uname",uname);
             }
-            if (username != null){
+            if (username != ""&&username != null){
                 queryWrapper.eq("username",username);
             }
-            if (phone != null){
+            if (phone != "" && phone != null){
                 queryWrapper.eq("phone",phone);
             }
-            if (carid != null){
+            if (carid != "" && carid != null){
                 queryWrapper.eq("carud",carid);
             }
             if (state != null){
@@ -132,5 +132,11 @@ public class AchieventmentServiceImpl implements AchievementService {
         }finally {
             newAchievementMapper.deleteAll(); //清空虚拟表
         }
+    }
+
+    @Override
+    public ResultVo achievementQueryById(Integer id) {
+        Achievement achievement = achievementMapper.selectById(id);
+        return ResultUtil.exec(true,"OK",achievement);
     }
 }

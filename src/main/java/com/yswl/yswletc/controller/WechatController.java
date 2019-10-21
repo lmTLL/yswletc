@@ -3,7 +3,6 @@ package com.yswl.yswletc.controller;
 import com.yswl.yswletc.common.utils.SHA1;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -18,9 +17,9 @@ import java.util.TreeSet;
 @RequestMapping("/wechat")
 public class WechatController {
 
-    private static final String TOKNG = "*****";//微信服务号令牌
+    private static final String TOKNG = "mytoken";//微信服务号令牌
      /**
-     *  微信接入入口
+     *  微信接入入口get接口
      * @return
      */
     @RequestMapping(value = "/index",method = RequestMethod.GET)
@@ -33,20 +32,19 @@ public class WechatController {
         set.add(nonce);
 
         StringBuilder stringBuilder = new StringBuilder();
-        Iterator<String> iterator = set.iterator();
-        while (iterator.hasNext()){
-            String next = iterator.next();
-            stringBuilder.append(next);
+        for (String s : set) {
+            stringBuilder.append(s);
         }
+        System.out.println(stringBuilder);
         String encode = SHA1.encode(stringBuilder.toString());
-        if (!encode.equals(stringBuilder)){
-            return null;
+        if (encode.equals(signature)){
+            return echostr;
         }
-        return echostr;
+        return null;
     }
 
     /**
-     * 接受微信公众号post请求
+     * 接受微信公众号post请求,获取请求体中的内容
      * @return
      */
     @RequestMapping(value = "/index",method = RequestMethod.POST)
