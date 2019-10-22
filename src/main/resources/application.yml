@@ -9,7 +9,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: yswl2019
-    url: jdbc:mysql://47.92.86.199:3306/db_yswletc?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://****:3306/db_yswletc?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       minimum-idle: 1
@@ -26,12 +26,12 @@ spring:
       max-request-size: 20MB
   #配置redis
   redis:
-    host: 47.92.86.199
+    host: ****
     port: 6379
 #配置图片管理器
 fdfs:
   tracker-list:
-    - 47.92.86.199:22122
+    - *****:22122
   connect-timeout: 5000
   so-timeout: 5000
   thumb-image:
@@ -45,4 +45,4 @@ mybatis-plus:
   type-aliases-package: com.yswl.yswletc.entity
 #图片服务器路径
 img:
-  server: http://47.92.86.199:83/
+  server: http://*****:83/
