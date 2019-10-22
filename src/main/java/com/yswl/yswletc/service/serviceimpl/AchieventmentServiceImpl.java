@@ -100,10 +100,11 @@ public class AchieventmentServiceImpl implements AchievementService {
     @Override
     public ResultVo achievementQueryByCondition(String itemname, String uname, String username, String phone, String carid, Integer state, Integer day, Integer current, Integer size) {
         try {
-            //按时间查找并写入虚拟表
+            //传值-1代表查询全部
             if (day == -1){
-                day = 365;
+                day = 1000;
             }
+            //按时间查找并写入虚拟表
             List<Achievement> lists = achievementMapper.queryAchievementByDay(day);
             if (lists.size() == 0){
                 return ResultUtil.exec(true,"OK",lists);

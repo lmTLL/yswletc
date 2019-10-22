@@ -14,8 +14,6 @@ import com.yswl.yswletc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.lang.model.type.ReferenceType;
-import java.security.cert.TrustAnchor;
 import java.util.*;
 
 @Service
@@ -127,15 +125,31 @@ public class UserServiceImpl implements UserService {
         Map map = new HashMap();
         List<Achievement> TeamAchievements = new ArrayList<>();
         try {
+            //自己的信息
             User user = userMapper.selectById(id);
-            User user2 = userMapper.selectById(user.getUid());
-            user2.setPassword(null);
+            user.setPassword(null);
+            map.put("myuser",user);
+
+            if (user.getUid() != 0){//不等于0说明有父级
+                //找到父级
+                User user2 = userMapper.selectById(user.getUid());
+                user2.setPassword(null);
+                map.put("father",user2);
+            }else {
+                //否则为null
+                map.put("father",null);
+            }
+
+            //查询我的伙伴
             QueryWrapper queryWrapper = new QueryWrapper();
             queryWrapper.eq("uid",id);
             List<User> list = userMapper.selectList(queryWrapper);
+
             List<Achievement> myAchievements = achievementMapper.selectAllAchievementByTime(id);//查询我的业绩
             groupMark.setMyScore(myAchievements.size());//我的业绩
             groupMark.setMyPartner(list.size());//我的伙伴数量
+
+
             for (User user1 : list) { //遍历所有伙伴
                 user1.setPassword(null);
                 List<Achievement> achievements = achievementMapper.selectAllAchievementByTime(user1.getId());//查询某个伙伴的业绩
@@ -144,9 +158,9 @@ public class UserServiceImpl implements UserService {
                     TeamAchievements.add(achievement);//添加进团队业绩中
                 }
             }
+
             groupMark.setTeamScore(TeamAchievements.size());
             map.put("groupMark",groupMark);
-            map.put("father",user2);
             map.put("son",list);
             return ResultUtil.exec(true,"OK",map);
         }catch (Exception e){

@@ -29,6 +29,7 @@
     where DATE_SUB(CURDATE(), INTERVAL #{day,jdbcType=INTEGER} DAY) <![CDATA[ <= ]]> date(submittime)
     order by Submittime desc;
   </select>
+
     <select id="AchievementqueryByidAndDate" resultType="com.yswl.yswletc.entity.Achievement">
       SELECT * FROM t_achievement
       where DATE_SUB(CURDATE(), INTERVAL #{day,jdbcType=INTEGER} DAY) <![CDATA[ <= ]]> date(submittime)
