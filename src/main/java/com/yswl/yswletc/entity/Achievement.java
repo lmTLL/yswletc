@@ -25,9 +25,9 @@ public class Achievement extends NewAchievement implements Serializable {
     @TableId(type = IdType.AUTO)
     private Integer id; //编号
 
-    private Integer uid; //当前提交用户id
+    private Integer uid; //提交用户id
 
-    private String uname; //提交的用户姓名
+    private String uname; //提交用户姓名
 
     private String username; //用户名
 
@@ -49,4 +49,6 @@ public class Achievement extends NewAchievement implements Serializable {
     private Date submittime; //提交时间
 
     private Integer state = 0; //审核状态：0待审核  1审核通过  2审核不通过
+
+    private String reason;//提示信息
 }

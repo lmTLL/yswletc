@@ -11,5 +11,5 @@ public interface AchievementMapper extends BaseMapper<Achievement> {
 
     List<Achievement> queryAchievementByDay(Integer day);//查看近几天的数据
 
-
+    List<Achievement> AchievementqueryByidAndDate(Integer id, Integer day);
 }

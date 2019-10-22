@@ -1,6 +1,8 @@
 package com.yswl.yswletc.controller;
 
+import com.baomidou.mybatisplus.extension.api.R;
 import com.yswl.yswletc.common.redis.RedisOperator;
+import com.yswl.yswletc.common.utils.ResultUtil;
 import com.yswl.yswletc.common.vo.ResultVo;
 import com.yswl.yswletc.entity.User;
 import com.yswl.yswletc.service.UserService;
@@ -43,10 +45,13 @@ public class UserController {
     public ResultVo userMyteamById(Integer id){
         return userService.userMyteamById(id);
     }
-
     //=================================后台管理接口
     @GetMapping("/user/queryAllByPaging.do")
     public ResultVo userQueryAllByPaging(Integer current, Integer size,String name,String phone){
        return userService.userQueryAllByPaging(current,size,name,phone);
+    }
+    @GetMapping("/user/queryById.do")
+    public ResultVo userQueryById(Integer id){
+        return userService.userQueryById(id);
     }
 }

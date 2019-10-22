@@ -5,12 +5,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.tobato.fastdfs.domain.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
-import com.yswl.yswletc.common.utils.ResultUtil;
-import com.yswl.yswletc.dao.*;
+import com.yswl.yswletc.common.utils.RecursionUtil;
+import com.yswl.yswletc.dao.AchievementMapper;
+import com.yswl.yswletc.dao.NewAchievementMapper;
+import com.yswl.yswletc.dao.ProjectMapper;
+import com.yswl.yswletc.dao.UserMapper;
 import com.yswl.yswletc.entity.*;
-import jdk.jfr.events.ExceptionThrownEvent;
-import jdk.management.resource.internal.inst.SocketOutputStreamRMHooks;
-import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +20,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class YswletcApplicationTests {
+
+    @Autowired
+    private RecursionUtil recursionUtil;
 
     @Autowired
     private FastFileStorageClient fastFileStorageClient;
@@ -40,12 +40,6 @@ public class YswletcApplicationTests {
 
     @Autowired
     private AchievementMapper achievementMapper;
-
-    @Autowired
-    private StudentMapper studentMapper;
-
-    @Autowired
-    private NewStudentMapper newStudentMapper;
 
     @Autowired
     private NewAchievementMapper newAchievementMapper;
@@ -102,52 +96,17 @@ public class YswletcApplicationTests {
     }
     @Test
     public void contextLoads4() {
-        NewStudent newStudent = new NewStudent();
-        List<Student> lists = studentMapper.queryStudentByDay(1);
-        newStudentMapper.insertAll(lists);
+
     }
     @Test
     public void contextLoads5() {
-        Student student = new Student();
-        for (int i = 0; i < 10; i++) {
-            student.setBirthday(new Date());
-            student.setAge(i);
-            student.setName("王麻"+i);
-            student.setPhone(""+i);
-            studentMapper.insert(student);
-        }
-
+        Wechat wechat = new Wechat();
     }
     @Test
     public void contextLoads6() {
         newAchievementMapper.deleteAll();
     }
-    @Test
-    public void contextLoads7() {
-        NewStudent newStudent = new NewStudent();
-        List<Student> lists = studentMapper.queryStudentByDay(1);
-        long startTime = System.currentTimeMillis();
-        for (Student student : lists) {
-            newStudent.setAge(student.getAge());
-            newStudent.setBirthday(student.getBirthday());
-            newStudent.setName(student.getName());
-            newStudent.setPhone(student.getPhone());
-            newStudent.setId(student.getId());
-            newStudentMapper.insert(newStudent);
-        }
-        long endTime = System.currentTimeMillis();
-        float seconds = (endTime - startTime) / 1000F;
-        System.out.println(Float.toString(seconds) + " seconds.");
-    }
-    @Test
-    public void contextLoads8() {
-        List<Student> lists = studentMapper.queryStudentByDay(1);
-        long startTime = System.currentTimeMillis();
-        newStudentMapper.insertAll(lists);
-        IPage<NewStudent> page = new Page<NewStudent>(1,3);
-        IPage<NewStudent> newStudentIPage = newStudentMapper.selectPage(page, null);
 
-    }
     @Test
     public void contextLoads9() {
         try {
@@ -216,10 +175,7 @@ public class YswletcApplicationTests {
     }
     @Test
     public void contextLoads10(){
-        List<Student> lists = studentMapper.queryStudentByDay(1);
-        Integer integer = newStudentMapper.insertAll(lists);
-        newStudentMapper.deleteAll();
-        System.out.println(integer);
+
 
     }
     @Test
@@ -229,5 +185,10 @@ public class YswletcApplicationTests {
         newAchievementMapper.deleteAll();
         System.out.println(integer);
 
+    }
+    @Test
+    public void contextLoads12(){
+        User user = userMapper.selectById(2);
+        boolean back = recursionUtil.back(user);
     }
 }

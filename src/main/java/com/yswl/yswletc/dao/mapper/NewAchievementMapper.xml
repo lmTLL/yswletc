@@ -15,7 +15,9 @@
         <result column="commission" property="commission" jdbcType="DECIMAL" />
         <result column="Submittime" property="submittime" jdbcType="TIMESTAMP" />
         <result column="state" property="state" jdbcType="INTEGER" />
+        <result column="reason" property="reason" jdbcType="VARCHAR" />
     </resultMap>
+
     <delete id="deleteAll">
         truncate table t_newachievement
     </delete>
@@ -25,14 +27,14 @@
       pid, username, phone,
       itemname, carid, picturepath,
       remarks, commission, Submittime,
-      state)
+      state, reason)
       VALUES
       <foreach collection="list" item="item" index="index" separator="," >
       (#{item.id,jdbcType=INTEGER}, #{item.uid,jdbcType=INTEGER}, #{item.uname,jdbcType=VARCHAR},
       #{item.pid,jdbcType=INTEGER}, #{item.username,jdbcType=VARCHAR}, #{item.phone,jdbcType=VARCHAR},
       #{item.itemname,jdbcType=VARCHAR}, #{item.carid,jdbcType=VARCHAR}, #{item.picturepath,jdbcType=VARCHAR},
       #{item.remarks,jdbcType=VARCHAR}, #{item.commission,jdbcType=DECIMAL}, #{item.submittime,jdbcType=TIMESTAMP},
-      #{item.state,jdbcType=INTEGER})
+      #{item.state,jdbcType=INTEGER},#{item.reason,jdbcType=VARCHAR})
       </foreach>
     </insert>
 </mapper>

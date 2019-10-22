@@ -1,6 +1,8 @@
 package com.yswl.yswletc.controller;
 
 import com.yswl.yswletc.common.utils.SHA1;
+import com.yswl.yswletc.common.wechatutil.MsgUtil;
+import com.yswl.yswletc.entity.Wechat;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -50,6 +52,8 @@ public class WechatController {
     @RequestMapping(value = "/index",method = RequestMethod.POST)
     public String wechatMSsg(@RequestBody String content){
         System.out.println(content);
-        return null;
+        Wechat wechat = MsgUtil.parseXml(content);
+        String event = MsgUtil.event(wechat);
+        return event;
     }
 }

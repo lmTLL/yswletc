@@ -32,7 +32,7 @@ public class Wechat {
     private String MediaId;
 
     /**
-     * 用户关注事件
+     * 关注事件
      */
     private String Event;
     private String EventKey;

@@ -3,6 +3,7 @@ package com.yswl.yswletc.service.serviceimpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yswl.yswletc.common.utils.RecursionUtil;
 import com.yswl.yswletc.common.utils.ResultUtil;
 import com.yswl.yswletc.common.vo.ResultVo;
 import com.yswl.yswletc.dao.AchievementMapper;
@@ -16,6 +17,7 @@ import com.yswl.yswletc.entity.User;
 import com.yswl.yswletc.service.AchievementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -23,6 +25,8 @@ import java.util.List;
 
 @Service
 public class AchieventmentServiceImpl implements AchievementService {
+    @Autowired
+    private RecursionUtil recursionUtil;
 
     @Autowired
     private AchievementMapper achievementMapper;
@@ -138,5 +142,49 @@ public class AchieventmentServiceImpl implements AchievementService {
     public ResultVo achievementQueryById(Integer id) {
         Achievement achievement = achievementMapper.selectById(id);
         return ResultUtil.exec(true,"OK",achievement);
+    }
+
+    @Override
+    @Transactional
+    public ResultVo achievementAudit(Integer id, Integer state, String reason) {
+        if (state == 1){
+            Achievement achievement = achievementMapper.selectById(id);
+            achievement.setState(state);
+            achievement.setReason(reason);
+            achievementMapper.updateById(achievement);//修改业绩状态
+
+            //查询业绩由谁提交
+            QueryWrapper queryWrapper = new QueryWrapper();
+            queryWrapper.eq("id", achievement.getUid());
+            List<User> list = userMapper.selectList(queryWrapper);
+
+            User user = list.get(0);
+            if (user != null){
+                //给用户加钱 +用户钱包+用户佣金+项目佣金
+                user.setWallet(user.getWallet().add(user.getCommission().add(achievement.getCommission())));
+                userMapper.updateById(user);//入库
+                //查询用户是否有上级+并给上级加钱
+                boolean back1 = recursionUtil.back(user);
+                return ResultUtil.exec(true,"OK","审核完成");
+            }
+        }else if (state == 2){
+            Achievement achievement = achievementMapper.selectById(id);
+            achievement.setState(state);
+            achievement.setReason(reason);
+            achievementMapper.updateById(achievement);
+            return ResultUtil.exec(true,"OK","审核完成");
+        }
+        return ResultUtil.exec(false,"ERROR","条件不满足");
+    }
+
+    @Override
+    public ResultVo AchievementqueryByidAndDate(Integer id, Integer day) {
+        try {
+            List<Achievement> list = achievementMapper.AchievementqueryByidAndDate(id,day);
+            return ResultUtil.exec(true,"OK",list);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultUtil.exec(false,"REEOR","网络错误");
+        }
     }
 }

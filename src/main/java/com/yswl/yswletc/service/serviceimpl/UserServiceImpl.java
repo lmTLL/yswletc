@@ -14,6 +14,8 @@ import com.yswl.yswletc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.lang.model.type.ReferenceType;
+import java.security.cert.TrustAnchor;
 import java.util.*;
 
 @Service
@@ -169,5 +171,15 @@ public class UserServiceImpl implements UserService {
         }
         IPage iPage = userMapper.selectPage(page, queryWrapper);
         return ResultUtil.exec(true, "OK",iPage);
+    }
+
+    @Override
+    public ResultVo userQueryById(Integer id) {
+        try {
+            User user = userMapper.selectById(id);
+            return ResultUtil.exec(true,"OK",user);
+        }catch (Exception e){
+            return ResultUtil.exec(false,"ERROR","数据库连接异常");
+        }
     }
 }

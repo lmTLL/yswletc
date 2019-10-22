@@ -6,4 +6,5 @@ import com.yswl.yswletc.entity.User;
 
 public interface UserMapper extends BaseMapper<User> {
 
+    User queryByUid(Integer uid);
 }

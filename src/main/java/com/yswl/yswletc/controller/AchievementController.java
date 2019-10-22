@@ -1,5 +1,6 @@
 package com.yswl.yswletc.controller;
 
+import com.yswl.yswletc.common.utils.ResultUtil;
 import com.yswl.yswletc.common.vo.ResultVo;
 import com.yswl.yswletc.entity.Achievement;
 import com.yswl.yswletc.service.AchievementService;
@@ -37,6 +38,14 @@ public class AchievementController {
     @GetMapping("/Achievement/queryById")
     public ResultVo achievementQueryById(Integer id){
         return achievementService.achievementQueryById(id);
+    }
+    @PostMapping("/Achievement/audit")
+    public ResultVo achievementAudit(Integer id,Integer state,String reason){
+        return achievementService.achievementAudit(id,state,reason);
+    }
+    @GetMapping("/Achievement/queryByidAnd")
+    public ResultVo AchievementqueryByidAndDate(Integer id,Integer day){
+        return achievementService.AchievementqueryByidAndDate(id,day);
     }
 
 }

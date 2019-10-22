@@ -47,4 +47,6 @@ public class NewAchievement implements Serializable {
     private Date submittime; //提交时间
 
     private Integer state = 0; //审核状态：0待审核  1审核通过  2审核不通过
+
+    private String reason;//提示信息
 }
