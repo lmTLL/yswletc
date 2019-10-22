@@ -4,13 +4,17 @@ import com.github.tobato.fastdfs.domain.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.yswl.yswletc.common.utils.ResultUtil;
 import com.yswl.yswletc.common.vo.ResultVo;
+import com.yswl.yswletc.dao.AchievementMapper;
+import com.yswl.yswletc.dao.NewAchievementMapper;
 import com.yswl.yswletc.dao.UserMapper;
+import com.yswl.yswletc.entity.Achievement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -24,6 +28,12 @@ public class ResController {
 
     @Autowired
     private FastFileStorageClient fastFileStorageClient;
+
+    @Autowired
+    private AchievementMapper achievementMapper;
+
+    @Autowired
+    private NewAchievementMapper newAchievementMapper;
 
     @PostMapping("/uploadImg")
     public ResultVo uploadImg(@RequestParam("file")MultipartFile file) {
@@ -55,7 +65,9 @@ public class ResController {
      */
     @GetMapping("/testll")
     public ResultVo userLogin() {
-        return null;
+        List<Achievement> list = achievementMapper.queryAchievementByDay(365);
+        Integer integer = newAchievementMapper.insertAll(list);
+        return ResultUtil.exec(true,"OK",list);
     }
 
 }

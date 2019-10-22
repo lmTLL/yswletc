@@ -101,7 +101,13 @@ public class AchieventmentServiceImpl implements AchievementService {
     public ResultVo achievementQueryByCondition(String itemname, String uname, String username, String phone, String carid, Integer state, Integer day, Integer current, Integer size) {
         try {
             //按时间查找并写入虚拟表
+            if (day == -1){
+                day = 365;
+            }
             List<Achievement> lists = achievementMapper.queryAchievementByDay(day);
+            if (lists.size() == 0){
+                return ResultUtil.exec(true,"OK",lists);
+            }
             Integer integer = newAchievementMapper.insertAll(lists);
             //对虚拟表进行条件查询
             if (current == null || size == null){

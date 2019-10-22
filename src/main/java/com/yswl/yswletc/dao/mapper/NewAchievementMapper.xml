@@ -15,7 +15,6 @@
         <result column="commission" property="commission" jdbcType="DECIMAL" />
         <result column="Submittime" property="submittime" jdbcType="TIMESTAMP" />
         <result column="state" property="state" jdbcType="INTEGER" />
-        <result column="reason" property="reason" jdbcType="VARCHAR" />
     </resultMap>
 
     <delete id="deleteAll">

@@ -96,7 +96,9 @@ public class YswletcApplicationTests {
     }
     @Test
     public void contextLoads4() {
-
+        List<Achievement> lists = achievementMapper.queryAchievementByDay(7);
+        System.out.println(lists.size());
+        System.out.println(lists);
     }
     @Test
     public void contextLoads5() {
@@ -175,8 +177,8 @@ public class YswletcApplicationTests {
     }
     @Test
     public void contextLoads10(){
-
-
+        List<Achievement> list = achievementMapper.queryAchievementByDay(365);
+        System.out.println(list);
     }
     @Test
     public void contextLoads11(){

@@ -15,7 +15,6 @@
         <result column="commission" property="commission" jdbcType="DECIMAL" />
         <result column="Submittime" property="submittime" jdbcType="TIMESTAMP" />
         <result column="state" property="state" jdbcType="INTEGER" />
-        <result column="picturepath" property="picturepath" jdbcType="VARCHAR" />
         <result column="reason" property="reason" jdbcType="VARCHAR" />
     </resultMap>
     <select id="selectAllAchievementByTime" resultType="com.yswl.yswletc.entity.Achievement">
@@ -27,7 +26,8 @@
 
     <select id="queryAchievementByDay" resultType="com.yswl.yswletc.entity.Achievement">
     SELECT * FROM t_achievement
-    where DATE_SUB(CURDATE(), INTERVAL #{day,jdbcType=INTEGER} DAY) <![CDATA[ <= ]]> date(submittime);
+    where DATE_SUB(CURDATE(), INTERVAL #{day,jdbcType=INTEGER} DAY) <![CDATA[ <= ]]> date(submittime)
+    order by Submittime desc;
   </select>
     <select id="AchievementqueryByidAndDate" resultType="com.yswl.yswletc.entity.Achievement">
       SELECT * FROM t_achievement

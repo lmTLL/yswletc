@@ -38,7 +38,7 @@ public  class RecursionUtil {
         User user1 = userMapper.selectById(uid);
         //计算子级和父级的差价
         BigDecimal subtract = user1.getCommission().subtract(user.getCommission());
-        //给父级加钱 钱包+佣金
+        //给父级加钱 钱包+佣金差
         user1.setWallet(user1.getWallet().add(subtract));
         userMapper.updateById(user1);
 
