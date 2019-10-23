@@ -6,8 +6,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yswl.yswletc.common.utils.ResultUtil;
 import com.yswl.yswletc.common.vo.ResultVo;
 import com.yswl.yswletc.dao.AchievementMapper;
+import com.yswl.yswletc.dao.BankCardMapper;
 import com.yswl.yswletc.dao.UserMapper;
 import com.yswl.yswletc.entity.Achievement;
+import com.yswl.yswletc.entity.BankCard;
 import com.yswl.yswletc.entity.GroupMark;
 import com.yswl.yswletc.entity.User;
 import com.yswl.yswletc.service.UserService;
@@ -24,6 +26,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private AchievementMapper achievementMapper;
+
+    @Autowired
+    private BankCardMapper bankCardMapper;
     /**
      * 登入
      * @param user
@@ -128,6 +133,14 @@ public class UserServiceImpl implements UserService {
             //自己的信息
             User user = userMapper.selectById(id);
             user.setPassword(null);
+            QueryWrapper uWrapper = new QueryWrapper();
+            //查询我银行卡
+            uWrapper.eq("uid",user.getId());
+            List<BankCard> list1 = bankCardMapper.selectList(uWrapper);
+            for (BankCard bankCard : list1) {
+                user.setBankCard(bankCard);
+            }
+            //封装传给前台
             map.put("myuser",user);
 
             if (user.getUid() != 0){//不等于0说明有父级

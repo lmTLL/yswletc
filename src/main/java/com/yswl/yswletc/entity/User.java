@@ -49,4 +49,7 @@ public class User implements Serializable {
     @TableField(exist = false)
     private Integer Today; //今日业绩
 
+    @TableField(exist = false)
+    private BankCard bankCard; //银行卡信息
+
 }
