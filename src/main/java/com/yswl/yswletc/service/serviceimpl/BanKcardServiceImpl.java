@@ -50,7 +50,7 @@ public class BanKcardServiceImpl implements BankCardService {
             String imgStr = Base64Util.encode(imageFromNetByUrl);
             String params = URLEncoder.encode("image", "UTF-8") + "=" + URLEncoder.encode(imgStr, "UTF-8");
             /**
-             * 线上环境access_token有过期时间， 客户端可自行缓存，过期后重新获取。
+             * 自行缓存，过期后重新获取。
              */
             String accessToken = "24.38772a1ef68c9e961e7cf60e16edd32d.2592000.1574323066.282335-17472678";
             String result = HttpUtil.post(bankcardIdentificate, accessToken, params);
