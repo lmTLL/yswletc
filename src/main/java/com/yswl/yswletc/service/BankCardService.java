@@ -16,4 +16,6 @@ public interface BankCardService {
     ResultVo bankCardDelete(Integer id);
 
     ResultVo bankCardQueryAll();
+
+    ResultVo bankCardQueryByuid(Integer uid);
 }

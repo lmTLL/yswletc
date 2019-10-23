@@ -1,21 +1,14 @@
 package com.yswl.yswletc.service.serviceimpl;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.yswl.yswletc.common.utils.Base64Util;
-import com.yswl.yswletc.common.utils.HttpUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yswl.yswletc.common.utils.ResultUtil;
-import com.yswl.yswletc.common.utils.StrUrl;
 import com.yswl.yswletc.common.vo.ResultVo;
 import com.yswl.yswletc.dao.BankCardMapper;
-import com.yswl.yswletc.dao.UserMapper;
 import com.yswl.yswletc.entity.BankCard;
-import com.yswl.yswletc.entity.User;
 import com.yswl.yswletc.service.BankCardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 
@@ -34,7 +27,7 @@ public class BanKcardServiceImpl implements BankCardService {
     @Override
     public ResultVo bankCardAdd(BankCard bankCard) {
         try {
-            bankCard.setCreation_time(new Date());
+            bankCard.setCreationtime(new Date());
             bankCardMapper.insert(bankCard);
 
         return ResultUtil.exec(true, "OK", "绑定成功");
@@ -60,6 +53,19 @@ public class BanKcardServiceImpl implements BankCardService {
         try {
             List<BankCard> bankCards = bankCardMapper.selectList(null);
             return ResultUtil.exec(true,"OK",bankCards);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultUtil.exec(false,"ERROR","网络错误");
+        }
+    }
+
+    @Override
+    public ResultVo bankCardQueryByuid(Integer uid) {
+        try {
+            QueryWrapper queryWrapper = new QueryWrapper();
+            queryWrapper.eq("uid",uid);
+            List list = bankCardMapper.selectList(queryWrapper);
+            return  ResultUtil.exec(true,"OK",list);
         }catch (Exception e){
             e.printStackTrace();
             return ResultUtil.exec(false,"ERROR","网络错误");

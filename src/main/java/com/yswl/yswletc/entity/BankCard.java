@@ -1,10 +1,10 @@
 package com.yswl.yswletc.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
@@ -15,7 +15,6 @@ import java.util.Date;
  * Time: 15:11
  * Description: No Description
  */
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName(value = "t_BankCard")
@@ -30,15 +29,101 @@ public class BankCard {
 
     private String name; //持卡人姓名
 
-    private String  bank_card_number; //银行卡卡号
+    @TableField(value = "bankCardNumber")
+    private String  bankcardnumber; //银行卡卡号
 
-    private String valid_date; //银行卡有效期
+    @TableField(value = "validDate")
+    private String validdate; //银行卡有效期
 
-    private String bank_card_type;//银行卡类型
+    @TableField(value = "bankCardType")
+    private String bankcardtype;//银行卡类型
 
-    private String bank_name; //银行名
+    @TableField(value = "bankName")
+    private String bankname; //银行名
 
-    private Date creation_time; //绑卡时间
+    @TableField(value = "creationTime")
+    private Date creationtime; //绑卡时间
 
-    private String card_path; //图片路径
+    @TableField(value = "cardPath")
+    private String cardpath; //图片路径
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
+    }
+
+    public String getUname() {
+        return uname;
+    }
+
+    public void setUname(String uname) {
+        this.uname = uname;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getBankcardnumber() {
+        return bankcardnumber;
+    }
+
+    public void setBankcardnumber(String bankcardnumber) {
+        this.bankcardnumber = bankcardnumber;
+    }
+
+    public String getValiddate() {
+        return validdate;
+    }
+
+    public void setValiddate(String validdate) {
+        this.validdate = validdate;
+    }
+
+    public String getBankcardtype() {
+        return bankcardtype;
+    }
+
+    public void setBankcardtype(String bankcardtype) {
+        this.bankcardtype = bankcardtype;
+    }
+
+    public String getBankname() {
+        return bankname;
+    }
+
+    public void setBankname(String bankname) {
+        this.bankname = bankname;
+    }
+
+    public Date getCreationtime() {
+        return creationtime;
+    }
+
+    public void setCreationtime(Date creationtime) {
+        this.creationtime = creationtime;
+    }
+
+    public String getCardpath() {
+        return cardpath;
+    }
+
+    public void setCardpath(String cardpath) {
+        this.cardpath = cardpath;
+    }
 }

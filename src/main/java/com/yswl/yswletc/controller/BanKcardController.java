@@ -34,5 +34,9 @@ public class BanKcardController {
     public ResultVo bankCardQueryAll(){
         return bankCardService.bankCardQueryAll();
     }
+    @GetMapping("/bankCard/queryByuid")
+    public ResultVo bankCardQueryByuid(Integer uid){
+        return bankCardService.bankCardQueryByuid(uid);
+    }
 
 }
