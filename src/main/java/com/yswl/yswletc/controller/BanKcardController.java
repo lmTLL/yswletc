@@ -1,6 +1,7 @@
 package com.yswl.yswletc.controller;
 
 import com.yswl.yswletc.common.vo.ResultVo;
+import com.yswl.yswletc.entity.BankCard;
 import com.yswl.yswletc.service.BankCardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,8 +23,8 @@ public class BanKcardController {
     private BankCardService bankCardService;
 
     @PostMapping("/bankCard/add")
-    public ResultVo bankCardAdd(Integer uid,String name,String path){
-        return bankCardService.bankCardAdd(uid,name,path);
+    public ResultVo bankCardAdd(BankCard bankCard){
+        return bankCardService.bankCardAdd(bankCard);
     }
     @GetMapping("/bankCard/delete")
     public ResultVo bankCardDelete(Integer id){

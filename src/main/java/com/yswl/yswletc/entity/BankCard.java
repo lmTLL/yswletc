@@ -38,7 +38,7 @@ public class BankCard {
 
     private String bank_name; //银行名
 
-    private Date creation_time; //时间
+    private Date creation_time; //绑卡时间
 
     private String card_path; //图片路径
 }

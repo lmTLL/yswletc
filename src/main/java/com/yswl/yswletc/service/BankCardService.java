@@ -1,6 +1,7 @@
 package com.yswl.yswletc.service;
 
 import com.yswl.yswletc.common.vo.ResultVo;
+import com.yswl.yswletc.entity.BankCard;
 
 /**
  * User: jang
@@ -10,7 +11,7 @@ import com.yswl.yswletc.common.vo.ResultVo;
  */
 public interface BankCardService {
 
-    ResultVo bankCardAdd(Integer uid, String name, String path);
+    ResultVo bankCardAdd(BankCard bankCard);
 
     ResultVo bankCardDelete(Integer id);
 
