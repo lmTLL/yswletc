@@ -6,14 +6,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yswl.yswletc.common.utils.RecursionUtil;
 import com.yswl.yswletc.common.utils.ResultUtil;
 import com.yswl.yswletc.common.vo.ResultVo;
-import com.yswl.yswletc.dao.AchievementMapper;
-import com.yswl.yswletc.dao.NewAchievementMapper;
-import com.yswl.yswletc.dao.ProjectMapper;
-import com.yswl.yswletc.dao.UserMapper;
-import com.yswl.yswletc.entity.Achievement;
-import com.yswl.yswletc.entity.NewAchievement;
-import com.yswl.yswletc.entity.Project;
-import com.yswl.yswletc.entity.User;
+import com.yswl.yswletc.dao.*;
+import com.yswl.yswletc.entity.*;
 import com.yswl.yswletc.service.AchievementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +33,9 @@ public class AchieventmentServiceImpl implements AchievementService {
 
     @Autowired
     private ProjectMapper projectMapper;
+
+    @Autowired
+    private DetailMapper detailMapper;
 
     /**
      * 提交业绩
@@ -154,8 +151,9 @@ public class AchieventmentServiceImpl implements AchievementService {
     @Override
     @Transactional
     public ResultVo achievementAudit(Integer id, Integer state, String reason) {
-        if (state == 1){
-            Achievement achievement = achievementMapper.selectById(id);
+        if (state == 1){//审核通过
+            Achievement achievement = achievementMapper.selectById(id);//按id查询业绩
+
             achievement.setState(state);
             achievement.setReason(reason);
             achievementMapper.updateById(achievement);//修改业绩状态
@@ -166,15 +164,29 @@ public class AchieventmentServiceImpl implements AchievementService {
             List<User> list = userMapper.selectList(queryWrapper);
 
             User user = list.get(0);
+            Detail detail = new Detail();
             if (user != null){
-                //给用户加钱 +用户钱包+用户佣金+项目佣金
-                user.setWallet(user.getWallet().add(user.getCommission().add(achievement.getCommission())));
+                //给用户加钱
+                //奖金=用户佣金+项目佣金
+                BigDecimal bonus = user.getCommission().add(achievement.getCommission());
+                user.setWallet(user.getWallet().add(bonus));//钱包额度=钱包+奖金
                 userMapper.updateById(user);//入库
+
+                detail.setUid(user.getId()); //用户id
+                detail.setSid(id); //标记id
+                detail.setAction(1);
+                detail.setMoney(bonus);
+                detail.setBalance(user.getWallet());
+                detail.setCreationtime(new Date());
+                detail.setRemark("提报业绩奖励");
+
+                detailMapper.insert(detail);
+
                 //查询用户是否有上级+并给上级加钱
-                boolean back1 = recursionUtil.back(user);
+                boolean back1 = recursionUtil.back(user,id);
                 return ResultUtil.exec(true,"OK","审核完成");
             }
-        }else if (state == 2){
+        }else if (state == 2){//审核不通过
             Achievement achievement = achievementMapper.selectById(id);
             achievement.setState(state);
             achievement.setReason(reason);

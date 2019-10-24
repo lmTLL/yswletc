@@ -204,6 +204,7 @@ public class UserServiceImpl implements UserService {
     public ResultVo userQueryById(Integer id) {
         try {
             User user = userMapper.selectById(id);
+            user.setPassword(null);
             return ResultUtil.exec(true,"OK",user);
         }catch (Exception e){
             return ResultUtil.exec(false,"ERROR","数据库连接异常");

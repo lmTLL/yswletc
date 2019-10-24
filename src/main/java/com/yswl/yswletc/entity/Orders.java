@@ -1,7 +1,6 @@
 package com.yswl.yswletc.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -11,12 +10,10 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @version 1.0
- * @user ken
- * @date 2019/6/9 11:36
+ * 提现订单表
  */
 @Data
 @AllArgsConstructor
@@ -39,6 +36,8 @@ public class Orders implements Serializable {
 
     private String bankname; //银行名
 
+    private String cardpath; //银行卡图片路径
+
     private BigDecimal allprice;//提款金额
 
     private Date creationtime; //提款发起时间
@@ -46,5 +45,9 @@ public class Orders implements Serializable {
     private Integer status = 0;//状态 0:待拨款 1:已拨款 2：驳回
 
     private String comment;//备注
+
+    private String receiptpath; //打款回执图片路径
+
+    private Date remittime;//打款时间
 
 }

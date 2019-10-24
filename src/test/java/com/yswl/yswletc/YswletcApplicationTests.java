@@ -3,13 +3,10 @@ package com.yswl.yswletc;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.tobato.fastdfs.domain.StorePath;
+import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.yswl.yswletc.common.utils.RecursionUtil;
-import com.yswl.yswletc.dao.AchievementMapper;
-import com.yswl.yswletc.dao.NewAchievementMapper;
-import com.yswl.yswletc.dao.ProjectMapper;
-import com.yswl.yswletc.dao.UserMapper;
+import com.yswl.yswletc.dao.*;
 import com.yswl.yswletc.entity.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +17,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -43,6 +43,10 @@ public class YswletcApplicationTests {
 
     @Autowired
     private NewAchievementMapper newAchievementMapper;
+
+    @Autowired
+    private AdministratorMapper administratorMapper;
+
 
 
     @Test
@@ -191,6 +195,32 @@ public class YswletcApplicationTests {
     @Test
     public void contextLoads12(){
         User user = userMapper.selectById(2);
-        boolean back = recursionUtil.back(user);
+        boolean back = recursionUtil.back(user,1);
+    }
+    @Test
+    public void contextLoads13(){
+        ExecutorService service = Executors.newFixedThreadPool(5);
+        File file = new File("C:\\Users\\17379\\Desktop\\下载.png");
+        try {
+            StorePath storePath = fastFileStorageClient.uploadFile(
+                    new FileInputStream(file),
+                    file.length(),
+                    "png",
+                    null
+            );
+            System.out.println("路径:"+storePath.getFullPath());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void contextLoads14(){
+        Administrator administrator = new Administrator();
+        administrator.setUsername("zhangsan");
+        administrator.setPassword("123456");
+        administratorMapper.insert(administrator);
+
+        System.out.println(administrator.getId());
+
     }
 }

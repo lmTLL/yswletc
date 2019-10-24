@@ -1,6 +1,6 @@
 package com.yswl.yswletc.controller;
 
-import com.github.tobato.fastdfs.domain.StorePath;
+import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -57,7 +57,7 @@ public class ResController {
                         flength,
                         houzui,
                         null);
-                    map.put("filepath", imgPath+storePath.getFullPath());
+                map.put("filepath", imgPath+storePath.getFullPath());
                     return ResultUtil.exec(true, "OK", map);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -87,7 +87,7 @@ public class ResController {
             String imgStr = Base64Util.encode(imageFromNetByUrl);
             String params = URLEncoder.encode("image", "UTF-8") + "=" + URLEncoder.encode(imgStr, "UTF-8");
             /**
-             * 线上环境access_token有过期时间， 客户端可自行缓存，过期后重新获取。
+             * 客户端可自行缓存，过期后重新获取。
              */
             String accessToken = "24.38772a1ef68c9e961e7cf60e16edd32d.2592000.1574323066.282335-17472678";
             String result = HttpUtil.post(bankcardIdentificate, accessToken, params);

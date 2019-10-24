@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
  * User: jang
  * Date: 2019/10/11
  * Time: 12:18
- * Description: No Description
+ * Description: 微信处理表
  */
 @Data
 @NoArgsConstructor

@@ -1,8 +1,6 @@
 package com.yswl.yswletc.controller;
 
-import com.baomidou.mybatisplus.extension.api.R;
 import com.yswl.yswletc.common.redis.RedisOperator;
-import com.yswl.yswletc.common.utils.ResultUtil;
 import com.yswl.yswletc.common.vo.ResultVo;
 import com.yswl.yswletc.entity.User;
 import com.yswl.yswletc.service.UserService;
