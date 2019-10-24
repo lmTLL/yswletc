@@ -16,4 +16,6 @@ public interface OrdersService {
     ResultVo ordersQueryByUid(Integer uid);
 
     ResultVo ordersAffirm(Integer id, String comment, String receiptpath);
+
+    ResultVo ordersReject(Integer id, String comment);
 }

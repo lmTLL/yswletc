@@ -1,6 +1,5 @@
 package com.yswl.yswletc.controller;
 
-import com.yswl.yswletc.common.utils.ResultUtil;
 import com.yswl.yswletc.common.vo.ResultVo;
 import com.yswl.yswletc.entity.Orders;
 import com.yswl.yswletc.service.OrdersService;
@@ -39,5 +38,9 @@ public class OrdersController {
     public ResultVo ordersAffirm(Integer id,String comment,String receiptpath){
         return ordersService.ordersAffirm(id,comment,receiptpath);
     }
-
+    //驳回打款
+    @PostMapping("/orders/reject")
+    public ResultVo ordersReject(Integer id,String comment){
+        return ordersService.ordersReject(id,comment);
+    }
 }

@@ -1,5 +1,7 @@
 package com.yswl.yswletc.service;
 
+import com.yswl.yswletc.common.vo.ResultVo;
+
 /**
  * User: jang
  * Date: 2019/10/24
@@ -8,4 +10,5 @@ package com.yswl.yswletc.service;
  */
 public interface DetailService {
 
+    ResultVo detailQueryByUid(Integer id);
 }

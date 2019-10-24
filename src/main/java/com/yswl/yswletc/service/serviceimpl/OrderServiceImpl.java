@@ -96,9 +96,6 @@ public class OrderServiceImpl implements OrdersService {
         }
     }
 
-    /**
-     *
-     */
     @Override
     public ResultVo ordersAffirm(Integer id, String comment, String receiptpath) {
         try {
@@ -108,10 +105,42 @@ public class OrderServiceImpl implements OrdersService {
             orders.setStatus(1);
             orders.setRemittime(new Date());
             ordersMapper.updateById(orders);
-            return ResultUtil.exec(true,"OK","完成核对");
+            return ResultUtil.exec(true,"OK","完成操作");
         }catch (Exception e){
             e.printStackTrace();
             return ResultUtil.exec(true,"OK","网络错误");
+        }
+    }
+
+    @Override
+    public ResultVo ordersReject(Integer id, String comment) {
+        try {
+            Orders orders = ordersMapper.selectById(id);//提款单
+
+            User user = userMapper.selectById(orders.getUid());//提款用户
+
+            orders.setComment(comment);
+            orders.setStatus(2);
+            user.setWallet(user.getWallet().add(orders.getAllprice()));//更新钱包
+
+
+            Detail detail = new Detail();
+            detail.setUid(user.getId()); //用户id
+            detail.setSid(id); //标记id
+            detail.setAction(1);
+            detail.setMoney(orders.getAllprice());
+            detail.setBalance(user.getWallet());
+            detail.setCreationtime(new Date());
+            detail.setRemark("驳回退款");
+
+            //入库
+            ordersMapper.updateById(orders);//更新提款单状态
+            userMapper.updateById(user);//更新用户钱包
+            detailMapper.updateById(detail);//明细入库
+            return ResultUtil.exec(true,"OK","操作成功");
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultUtil.exec(false,"ERROR","网络错误");
         }
     }
 }
