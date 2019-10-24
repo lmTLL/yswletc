@@ -1,4 +1,4 @@
-package com.yswl.yswletc.service.serviceimpl;
+package com.yswl.yswletc.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yswl.yswletc.common.utils.ResultUtil;
@@ -142,5 +142,10 @@ public class OrderServiceImpl implements OrdersService {
             e.printStackTrace();
             return ResultUtil.exec(false,"ERROR","网络错误");
         }
+    }
+
+    @Override
+    public ResultVo bankCardQueryByterm(String name, Integer statis, Integer day) {
+        return null;
     }
 }

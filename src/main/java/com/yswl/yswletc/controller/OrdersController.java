@@ -43,4 +43,11 @@ public class OrdersController {
     public ResultVo ordersReject(Integer id,String comment){
         return ordersService.ordersReject(id,comment);
     }
+
+    //条件查询提款列表
+    @PostMapping("/bankCard/queryByterm")
+    public ResultVo bankCardQueryByterm(String name,Integer statis,Integer day){
+       return ordersService.bankCardQueryByterm(name,statis,day);
+    }
+
 }

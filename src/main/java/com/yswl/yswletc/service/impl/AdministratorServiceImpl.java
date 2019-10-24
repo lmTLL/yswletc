@@ -1,4 +1,4 @@
-package com.yswl.yswletc.service.serviceimpl;
+package com.yswl.yswletc.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yswl.yswletc.common.utils.ResultUtil;

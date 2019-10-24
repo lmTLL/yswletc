@@ -18,4 +18,6 @@ public interface OrdersService {
     ResultVo ordersAffirm(Integer id, String comment, String receiptpath);
 
     ResultVo ordersReject(Integer id, String comment);
+
+    ResultVo bankCardQueryByterm(String name, Integer statis, Integer day);
 }
