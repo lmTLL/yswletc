@@ -1,6 +1,8 @@
 package com.yswl.yswletc.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yswl.yswletc.common.utils.ResultUtil;
 import com.yswl.yswletc.common.vo.ResultVo;
 import com.yswl.yswletc.dao.BankCardMapper;
@@ -111,7 +113,6 @@ public class OrderServiceImpl implements OrdersService {
             return ResultUtil.exec(true,"OK","网络错误");
         }
     }
-
     @Override
     public ResultVo ordersReject(Integer id, String comment) {
         try {
@@ -144,8 +145,24 @@ public class OrderServiceImpl implements OrdersService {
         }
     }
 
+
     @Override
-    public ResultVo bankCardQueryByterm(String name, Integer statis, Integer day) {
-        return null;
+    public ResultVo ordersQueryByterm(String name, Integer status, Integer day,Integer current,Integer size) {
+        try {
+            QueryWrapper queryWrapper = new QueryWrapper();
+            IPage<Orders> page = new Page<Orders>(current,size);
+            if (name != "" && name != null){
+                queryWrapper.like("name",name);
+            }
+            if (status != null){
+                queryWrapper.eq("status",status);
+            }
+            queryWrapper.last("and DATE_SUB(CURDATE(), INTERVAL "+day+" DAY) <= date(remittime)");
+            IPage iPage = ordersMapper.selectPage(page, queryWrapper);
+            return ResultUtil.exec(true,"OK",iPage);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultUtil.exec(false,"REEOR","网络错误");
+        }
     }
 }

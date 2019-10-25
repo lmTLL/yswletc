@@ -1,6 +1,7 @@
 package com.yswl.yswletc.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.yswl.yswletc.entity.Achievement;
 import com.yswl.yswletc.entity.Orders;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,7 +13,9 @@ import java.util.List;
  * Time: 17:15
  * Description: No Description
  */
-public interface OrdersMapper extends BaseMapper<Orders> {
+public interface NewOrdersMapper extends BaseMapper<Orders> {
 
-    List<Orders> ordersQueryByterm(@Param("name")String name, @Param("status") Integer status,@Param("day") Integer day);
+    Integer deleteAll();//删除所有数据
+
+    Integer insertAll(List<Orders> list); //批量插入
 }

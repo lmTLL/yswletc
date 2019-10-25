@@ -45,9 +45,9 @@ public class OrdersController {
     }
 
     //条件查询提款列表
-    @PostMapping("/bankCard/queryByterm")
-    public ResultVo bankCardQueryByterm(String name,Integer statis,Integer day){
-       return ordersService.bankCardQueryByterm(name,statis,day);
+    @PostMapping("/orders/queryByterm")
+    public ResultVo ordersQueryByterm(String name,Integer status,Integer day,Integer current,Integer size){
+       return ordersService.ordersQueryByterm(name,status,day,current,size);
     }
 
 }

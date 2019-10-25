@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yswl.yswletc.dao.NewOrdersMapper" >
+  <resultMap id="BaseResultMap" type="com.yswl.yswletc.entity.NewOrders" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="bid" property="bid" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="uname" property="uname" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="VARCHAR" />
+    <result column="bankname" property="bankname" jdbcType="VARCHAR" />
+    <result column="cardpath" property="cardpath" jdbcType="VARCHAR" />
+    <result column="allprice" property="allprice" jdbcType="DECIMAL" />
+    <result column="creationtime" property="creationtime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="receiptpath" property="receiptpath" jdbcType="VARCHAR" />
+    <result column="remittime" property="remittime" jdbcType="TIMESTAMP" />
+  </resultMap>
+    <delete id="deleteAll">
+        truncate table t_neworders
+    </delete>
+
+
+    <insert id="insertAll" parameterType="com.yswl.yswletc.entity.NewOrders">
+        INSERT INTO t_newachievement (id, uid, uname,
+        pid, username, phone,
+        itemname, carid, picturepath,
+        remarks, commission, Submittime,
+        state, reason)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (#{item.id,jdbcType=INTEGER}, #{item.uid,jdbcType=INTEGER}, #{item.uname,jdbcType=VARCHAR},
+            #{item.pid,jdbcType=INTEGER}, #{item.username,jdbcType=VARCHAR}, #{item.phone,jdbcType=VARCHAR},
+            #{item.itemname,jdbcType=VARCHAR}, #{item.carid,jdbcType=VARCHAR}, #{item.picturepath,jdbcType=VARCHAR},
+            #{item.remarks,jdbcType=VARCHAR}, #{item.commission,jdbcType=DECIMAL}, #{item.submittime,jdbcType=TIMESTAMP},
+            #{item.state,jdbcType=INTEGER},#{item.reason,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+
+
+</mapper>

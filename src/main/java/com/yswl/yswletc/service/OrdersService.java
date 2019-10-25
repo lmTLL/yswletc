@@ -19,5 +19,5 @@ public interface OrdersService {
 
     ResultVo ordersReject(Integer id, String comment);
 
-    ResultVo bankCardQueryByterm(String name, Integer statis, Integer day);
+    ResultVo ordersQueryByterm(String name, Integer status, Integer day,Integer current,Integer size);
 }

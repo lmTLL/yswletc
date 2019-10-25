@@ -1,7 +1,5 @@
 package com.yswl.yswletc.controller;
 
-import com.sun.xml.internal.bind.v2.model.core.ID;
-import com.yswl.yswletc.common.utils.ResultUtil;
 import com.yswl.yswletc.common.vo.ResultVo;
 import com.yswl.yswletc.service.DetailService;
 import org.springframework.beans.factory.annotation.Autowired;
