@@ -1,6 +1,5 @@
 package com.yswl.yswletc.controller;
 
-import com.yswl.yswletc.common.utils.ResultUtil;
 import com.yswl.yswletc.common.vo.ResultVo;
 import com.yswl.yswletc.entity.BankCard;
 import com.yswl.yswletc.service.BankCardService;
@@ -9,8 +8,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.io.PrintStream;
 
 /**
  * User: jang

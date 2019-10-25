@@ -20,7 +20,6 @@ public class ProjectController {
     }
     @GetMapping("/project/queryById")
     public ResultVo projectqueryById(Integer id) {
-        System.out.println(id);
         return projectService.projectqueryById(id);
     }
 

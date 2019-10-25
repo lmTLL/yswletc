@@ -26,9 +26,6 @@ public class AchieventmentServiceImpl implements AchievementService {
     private AchievementMapper achievementMapper;
 
     @Autowired
-    private NewAchievementMapper newAchievementMapper;
-
-    @Autowired
     private UserMapper userMapper;
 
     @Autowired
@@ -101,44 +98,42 @@ public class AchieventmentServiceImpl implements AchievementService {
             if (day == -1){
                 day = 1000;
             }
-            //按时间查找并写入虚拟表
-            List<Achievement> lists = achievementMapper.queryAchievementByDay(day);
-            if (lists.size() == 0){
-                return ResultUtil.exec(true,"OK",lists);
-            }
-            Integer integer = newAchievementMapper.insertAll(lists);
-            //对虚拟表进行条件查询
+
             if (current == null || size == null){
                 current =1;
                 size = 99999;
             }
-            IPage<NewAchievement> page = new Page<NewAchievement>(current,size);
+            IPage<Achievement> page = new Page<Achievement>(current,size);
             QueryWrapper queryWrapper = new QueryWrapper();
-            if (itemname != "" && itemname != null){
+            if (!(itemname == "" || itemname == null)){
                 queryWrapper.eq("itemname",itemname);
             }
-            if (uname != "" && uname != null){
+            if (!(uname == "" || uname == null)){
                 queryWrapper.eq("uname",uname);
             }
-            if (username != ""&&username != null){
+            if (!(username == "" || username == null)){
                 queryWrapper.eq("username",username);
             }
-            if (phone != "" && phone != null){
+            if (!(phone == "" || phone == null)){
                 queryWrapper.eq("phone",phone);
             }
-            if (carid != "" && carid != null){
+            if (!(carid == "" || carid == null)){
                 queryWrapper.eq("carud",carid);
             }
-            if (state != null){
+            if (!(state == null)){
                 queryWrapper.eq("state",state);
             }
-            IPage iPage = newAchievementMapper.selectPage(page, queryWrapper);
+            if ((itemname == "" || itemname == null) && (uname == "" || uname == null)&& (username == "" || username == null) && (phone == "" || phone == null) && (carid == "" || carid == null) && (state == null)){
+
+                queryWrapper.last("where DATE_SUB(CURDATE(), INTERVAL "+day+" DAY) <= date(submittime)");
+            }else {
+                queryWrapper.last("and DATE_SUB(CURDATE(), INTERVAL "+day+" DAY) <= date(submittime)");
+            }
+            IPage iPage = achievementMapper.selectPage(page, queryWrapper);
             return ResultUtil.exec(true,"OK",iPage);
         }catch (Exception e){
             e.printStackTrace();
             return ResultUtil.exec(false,"ERROR","网络错误");
-        }finally {
-            newAchievementMapper.deleteAll(); //清空虚拟表
         }
     }
 

@@ -10,9 +10,7 @@ import com.yswl.yswletc.common.utils.ResultUtil;
 import com.yswl.yswletc.common.utils.StrUrl;
 import com.yswl.yswletc.common.vo.ResultVo;
 import com.yswl.yswletc.dao.AchievementMapper;
-import com.yswl.yswletc.dao.NewAchievementMapper;
 import com.yswl.yswletc.dao.UserMapper;
-import com.yswl.yswletc.entity.Achievement;
 import com.yswl.yswletc.entity.BankCard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -40,8 +37,6 @@ public class ResController {
     @Autowired
     private AchievementMapper achievementMapper;
 
-    @Autowired
-    private NewAchievementMapper newAchievementMapper;
 
     @PostMapping("/uploadImg")
     public ResultVo uploadImg(@RequestParam("file")MultipartFile file) {
@@ -97,7 +92,6 @@ public class ResController {
             String valid = String.valueOf(jsonObject.get("valid_date")).replace("\"", "");
             String type = String.valueOf(jsonObject.get("bank_card_type"));
             String bname = String.valueOf(jsonObject.get("bank_name")).replace("\"", "");
-            System.out.println(type);
             if (bname.equals(null) || bname.equals("")){
                 return ResultUtil.exec(true, "ERROR", "无法识别,请核对后再上传");
             }
@@ -125,7 +119,6 @@ public class ResController {
             map.put("Bank_name",bname);
             map.put("Bank_card_number",number);
             map.put("Valid_date",valid);
-            System.out.println(number);
             return ResultUtil.exec(true,"OK",map);
         } catch (Exception e) {
             e.printStackTrace();
@@ -138,9 +131,7 @@ public class ResController {
      */
     @GetMapping("/testll")
     public ResultVo userLogin() {
-        List<Achievement> list = achievementMapper.queryAchievementByDay(365);
-        Integer integer = newAchievementMapper.insertAll(list);
-        return ResultUtil.exec(true,"OK",list);
+        return null;
     }
 
 

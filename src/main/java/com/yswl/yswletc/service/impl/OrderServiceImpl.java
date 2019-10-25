@@ -152,12 +152,20 @@ public class OrderServiceImpl implements OrdersService {
             QueryWrapper queryWrapper = new QueryWrapper();
             IPage<Orders> page = new Page<Orders>(current,size);
             if (name != "" && name != null){
-                queryWrapper.like("name",name);
+                queryWrapper.eq("name",name);
             }
             if (status != null){
                 queryWrapper.eq("status",status);
             }
-            queryWrapper.last("and DATE_SUB(CURDATE(), INTERVAL "+day+" DAY) <= date(remittime)");
+            if (day == -1){
+                day = 1000;
+            }
+            if ((status == null) && (name == "" || name == null)){
+                queryWrapper.last("where DATE_SUB(CURDATE(), INTERVAL "+day+" DAY) <= date(remittime)");
+
+            }else {
+                queryWrapper.last("and DATE_SUB(CURDATE(), INTERVAL "+day+" DAY) <= date(remittime)");
+            }
             IPage iPage = ordersMapper.selectPage(page, queryWrapper);
             return ResultUtil.exec(true,"OK",iPage);
         }catch (Exception e){

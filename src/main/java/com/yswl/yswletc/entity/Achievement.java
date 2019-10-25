@@ -20,7 +20,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "t_achievement")
-public class Achievement extends NewAchievement implements Serializable {
+public class Achievement implements Serializable {
 
     @TableId(type = IdType.AUTO)
     private Integer id; //编号

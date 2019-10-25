@@ -22,7 +22,6 @@ public class UserController {
 
     @PostMapping("/user/login.do")
     public ResultVo userLogin(User user){
-        System.out.println(user.getName());
         return userService.userLogin(user);
     }
 
