@@ -15,6 +15,7 @@ import com.yswl.yswletc.entity.Orders;
 import com.yswl.yswletc.entity.User;
 import com.yswl.yswletc.service.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,8 @@ import java.util.List;
  */
 @Service
 public class OrderServiceImpl implements OrdersService {
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
     @Autowired
     private OrdersMapper ordersMapper;
@@ -78,6 +81,14 @@ public class OrderServiceImpl implements OrdersService {
             detail.setRemark("金额提现扣除");
             detailMapper.insert(detail); //入库
 
+            //创建缓存
+            String s1 = redisTemplate.opsForValue().get("orders");
+            if (s1 == null){
+                s1 = "0";
+            }
+            Integer valueOf = Integer.valueOf(s1);
+            redisTemplate.opsForValue().set("orders", String.valueOf(valueOf+1));
+
             return ResultUtil.exec(true,"OK","发起成功");
         }catch (Exception e){
             e.printStackTrace();
@@ -89,6 +100,7 @@ public class OrderServiceImpl implements OrdersService {
     public ResultVo ordersQueryByUid(Integer uid) {
         try {
             QueryWrapper queryWrapper = new QueryWrapper();
+            queryWrapper.orderByDesc("id");
             queryWrapper.eq("uid",uid);
             List list = ordersMapper.selectList(queryWrapper);
             return ResultUtil.exec(true,"OK",list);
@@ -151,20 +163,19 @@ public class OrderServiceImpl implements OrdersService {
         try {
             QueryWrapper queryWrapper = new QueryWrapper();
             IPage<Orders> page = new Page<Orders>(current,size);
+            queryWrapper.orderByDesc("id");
             if (name != "" && name != null){
                 queryWrapper.eq("name",name);
             }
             if (status != null){
                 queryWrapper.eq("status",status);
             }
-            if (day == -1){
-                day = 1000;
-            }
-            if ((status == null) && (name == "" || name == null)){
-                queryWrapper.last("where DATE_SUB(CURDATE(), INTERVAL "+day+" DAY) <= date(remittime)");
-
-            }else {
-                queryWrapper.last("and DATE_SUB(CURDATE(), INTERVAL "+day+" DAY) <= date(remittime)");
+            if (!(day == -1)){
+                if ((status == null) && (name == "" || name == null)){
+                    queryWrapper.last("where DATE_SUB(CURDATE(), INTERVAL "+day+" DAY) <= date(remittime) ORDER BY id DESC ");
+                }else {
+                    queryWrapper.last("and DATE_SUB(CURDATE(), INTERVAL "+day+" DAY) <= date(remittime) ORDER BY id DESC ");
+                }
             }
             IPage iPage = ordersMapper.selectPage(page, queryWrapper);
             return ResultUtil.exec(true,"OK",iPage);

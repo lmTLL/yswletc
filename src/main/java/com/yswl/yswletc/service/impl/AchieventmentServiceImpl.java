@@ -10,6 +10,7 @@ import com.yswl.yswletc.dao.*;
 import com.yswl.yswletc.entity.*;
 import com.yswl.yswletc.service.AchievementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,10 @@ import java.util.List;
 
 @Service
 public class AchieventmentServiceImpl implements AchievementService {
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+
     @Autowired
     private RecursionUtil recursionUtil;
 
@@ -55,6 +60,13 @@ public class AchieventmentServiceImpl implements AchievementService {
             achievement.setCommission(umoney.add(pmoney));
             achievement.setUname(uname);
             achievementMapper.insert(achievement);
+
+            String s1 = redisTemplate.opsForValue().get("achievement");
+            if (s1 == null){
+                s1 = "0";
+            }
+            Integer orders = Integer.valueOf(s1);
+            redisTemplate.opsForValue().set("achievement", String.valueOf(orders+1));
             return ResultUtil.exec(true, "OK", "提交成功");
         }catch (Exception e){
             e.printStackTrace();
@@ -69,6 +81,7 @@ public class AchieventmentServiceImpl implements AchievementService {
     public ResultVo achievementqueryByUid(Integer uid) {
         try {
             QueryWrapper queryWrapper = new QueryWrapper();
+            queryWrapper.orderByDesc("id");
             queryWrapper.eq("uid",uid);
             queryWrapper.orderByAsc("submittime");//按时间排序
             List<Achievement> list = achievementMapper.selectList(queryWrapper);
@@ -118,16 +131,15 @@ public class AchieventmentServiceImpl implements AchievementService {
                 queryWrapper.eq("phone",phone);
             }
             if (!(carid == "" || carid == null)){
-                queryWrapper.eq("carud",carid);
+                queryWrapper.eq("carid",carid);
             }
             if (!(state == null)){
                 queryWrapper.eq("state",state);
             }
-            if ((itemname == "" || itemname == null) && (uname == "" || uname == null)&& (username == "" || username == null) && (phone == "" || phone == null) && (carid == "" || carid == null) && (state == null)){
-
-                queryWrapper.last("where DATE_SUB(CURDATE(), INTERVAL "+day+" DAY) <= date(submittime)");
+            if ((itemname == "" || itemname == null) && (uname == "" || uname == null) && (username == "" || username == null) && (phone == "" || phone == null) && (carid == "" || carid == null) && (state == null)){
+                queryWrapper.last("where DATE_SUB(CURDATE(), INTERVAL "+day+" DAY) <= date(submittime) ORDER BY id DESC ");
             }else {
-                queryWrapper.last("and DATE_SUB(CURDATE(), INTERVAL "+day+" DAY) <= date(submittime)");
+                queryWrapper.last("and DATE_SUB(CURDATE(), INTERVAL "+day+" DAY) <= date(submittime) ORDER BY id DESC ");
             }
             IPage iPage = achievementMapper.selectPage(page, queryWrapper);
             return ResultUtil.exec(true,"OK",iPage);

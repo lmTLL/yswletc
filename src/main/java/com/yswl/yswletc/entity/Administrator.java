@@ -13,7 +13,7 @@ import java.io.Serializable;
  * User: jang
  * Date: 2019/10/17
  * Time: 9:02
- * Description: No Description
+ * Description: 管理员表
  */
 @Data
 @AllArgsConstructor

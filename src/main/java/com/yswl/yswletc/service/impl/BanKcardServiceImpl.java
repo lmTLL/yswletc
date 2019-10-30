@@ -64,7 +64,7 @@ public class BanKcardServiceImpl implements BankCardService {
         try {
             QueryWrapper queryWrapper = new QueryWrapper();
             queryWrapper.eq("uid",uid);
-            List list = bankCardMapper.selectList(queryWrapper);
+            List<BankCard> list = bankCardMapper.selectList(queryWrapper);
             return  ResultUtil.exec(true,"OK",list);
         }catch (Exception e){
             e.printStackTrace();

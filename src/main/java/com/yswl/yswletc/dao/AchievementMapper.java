@@ -2,9 +2,11 @@ package com.yswl.yswletc.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.yswl.yswletc.entity.Achievement;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
+@Mapper
 public interface AchievementMapper extends BaseMapper<Achievement> {
 
     List<Achievement> selectAllAchievementByTime(Integer uid);//查看当前用户今天业绩接口

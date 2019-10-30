@@ -14,7 +14,7 @@ import java.util.Date;
  * User: jang
  * Date: 2019/10/22
  * Time: 15:11
- * Description: No Description
+ * Description: 银行卡表
  */
 @Data
 @NoArgsConstructor
