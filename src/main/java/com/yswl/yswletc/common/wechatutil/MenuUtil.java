@@ -10,7 +10,7 @@ import java.net.URL;
  * User: jang
  * Date: 2019/10/11
  * Time: 13:47
- * Description: No Description
+ * Description: 创建自定义菜单
  */
 public class MenuUtil {
     private static final String MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token="+TokenUtil.getAccessToken();

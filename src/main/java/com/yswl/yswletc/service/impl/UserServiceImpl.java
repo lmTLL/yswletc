@@ -207,7 +207,22 @@ public class UserServiceImpl implements UserService {
             user.setPassword(null);
             return ResultUtil.exec(true,"OK",user);
         }catch (Exception e){
+            e.printStackTrace();
             return ResultUtil.exec(false,"ERROR","数据库连接异常");
+        }
+    }
+
+    @Override
+    public ResultVo userUpdateOpenid(Integer id, String openid) {
+        try {
+
+            User user = userMapper.selectById(id);
+            user.setOpenid(openid);
+            userMapper.updateById(user);
+            return ResultUtil.exec(true,"OK",user);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultUtil.exec(false, "ERROR", "网络错误");
         }
     }
 }

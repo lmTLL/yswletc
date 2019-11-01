@@ -18,4 +18,6 @@ public interface UserService {
     ResultVo userQueryAllByPaging(Integer current, Integer size,String name,String phone);
 
     ResultVo userQueryById(Integer id);
+
+    ResultVo userUpdateOpenid(Integer id, String openid);
 }

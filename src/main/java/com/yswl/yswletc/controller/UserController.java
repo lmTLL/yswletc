@@ -5,10 +5,7 @@ import com.yswl.yswletc.common.vo.ResultVo;
 import com.yswl.yswletc.entity.User;
 import com.yswl.yswletc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
@@ -41,6 +38,11 @@ public class UserController {
     @GetMapping("/user/myteamById.do")
     public ResultVo userMyteamById(Integer id){
         return userService.userMyteamById(id);
+    }
+
+    @PostMapping("/user/updateOpenid")
+    public ResultVo userUpdateOpenid(Integer id,String openid){
+        return userService.userUpdateOpenid(id,openid);
     }
     //=================================后台管理接口
     @GetMapping("/user/queryAllByPaging.do")

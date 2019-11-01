@@ -48,12 +48,19 @@ public class AchieventmentServiceImpl implements AchievementService {
         String uname = user.getUname();//当前用户姓名
         BigDecimal umoney = user.getCommission(); //当前用户的佣金
 
+        //获取当前提报的项目
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("id", achievement.getPid());
         List<Project> list = projectMapper.selectList(queryWrapper);
         BigDecimal pmoney = null;
         for (Project project : list) {
             pmoney = project.getCommission(); //获取当前项目佣金
+            //当前项目数减一
+            project.setRemainders(project.getRemainders()-1);
+            if (project.getRemainders()==0){
+                project.setState(0);
+            }
+            projectMapper.updateById(project);//修改项目状态
         }
         try {
             achievement.setSubmittime(new Date());
@@ -61,12 +68,14 @@ public class AchieventmentServiceImpl implements AchievementService {
             achievement.setUname(uname);
             achievementMapper.insert(achievement);
 
+            //提报缓存
             String s1 = redisTemplate.opsForValue().get("achievement");
             if (s1 == null){
                 s1 = "0";
             }
             Integer orders = Integer.valueOf(s1);
             redisTemplate.opsForValue().set("achievement", String.valueOf(orders+1));
+
             return ResultUtil.exec(true, "OK", "提交成功");
         }catch (Exception e){
             e.printStackTrace();
