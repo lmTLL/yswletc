@@ -1,5 +1,6 @@
 package com.yswl.yswletc.common.wechatutil;
 
+import com.yswl.yswletc.entity.SystemWechat;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -16,9 +17,7 @@ import java.net.URL;
  */
 public class TokenUtil {
 
-    private static final String APP_ID = "wx0b3b3d152598e896";
-    private static final String APPSECRET = "b062ee6df6f61f1c6c8b956459a8fe3b";
-    private static final String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+APP_ID+"&secret="+APPSECRET;
+    private static final String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+ SystemWechat.APP_ID+"&secret="+SystemWechat.APP_SECRET;
 
 
     public static void main(String[] args) {

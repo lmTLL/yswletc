@@ -41,8 +41,8 @@ public class UserController {
     }
 
     @PostMapping("/user/updateOpenid")
-    public ResultVo userUpdateOpenid(Integer id,String openid){
-        return userService.userUpdateOpenid(id,openid);
+    public ResultVo userUpdateOpenid(Integer id,String code){
+        return userService.userUpdateOpenid(id,code);
     }
     //=================================后台管理接口
     @GetMapping("/user/queryAllByPaging.do")

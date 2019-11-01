@@ -3,16 +3,15 @@ package com.yswl.yswletc.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yswl.yswletc.common.utils.HttpOpenUtil;
 import com.yswl.yswletc.common.utils.ResultUtil;
 import com.yswl.yswletc.common.vo.ResultVo;
 import com.yswl.yswletc.dao.AchievementMapper;
 import com.yswl.yswletc.dao.BankCardMapper;
 import com.yswl.yswletc.dao.UserMapper;
-import com.yswl.yswletc.entity.Achievement;
-import com.yswl.yswletc.entity.BankCard;
-import com.yswl.yswletc.entity.GroupMark;
-import com.yswl.yswletc.entity.User;
+import com.yswl.yswletc.entity.*;
 import com.yswl.yswletc.service.UserService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -213,13 +212,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResultVo userUpdateOpenid(Integer id, String openid) {
+    public ResultVo userUpdateOpenid(Integer id, String code) {
         try {
+            String result = HttpOpenUtil.sendGet("https://api.weixin.qq.com/sns/jscode2session",
+                    "appid=" + SystemWechat.APP_ID + //小程序APPID
+                            "&secret="+ SystemWechat.APP_SECRET + //小程序秘钥
+                            "&js_code="+ code + //前端传来的code
+                            "&grant_type=authorization_code");
+            JSONObject jsonObject = new JSONObject(result);
+            String openid = jsonObject.getString("openid");
 
             User user = userMapper.selectById(id);
             user.setOpenid(openid);
             userMapper.updateById(user);
-            return ResultUtil.exec(true,"OK",user);
+            return ResultUtil.exec(true,"OK","添加成功");
         }catch (Exception e){
             e.printStackTrace();
             return ResultUtil.exec(false, "ERROR", "网络错误");

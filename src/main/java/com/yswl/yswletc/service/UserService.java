@@ -19,5 +19,5 @@ public interface UserService {
 
     ResultVo userQueryById(Integer id);
 
-    ResultVo userUpdateOpenid(Integer id, String openid);
+    ResultVo userUpdateOpenid(Integer id, String code);
 }
