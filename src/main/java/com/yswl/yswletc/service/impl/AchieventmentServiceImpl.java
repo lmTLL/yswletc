@@ -45,7 +45,7 @@ public class AchieventmentServiceImpl implements AchievementService {
     @Override
     public ResultVo achievementSubmit(Achievement achievement) {
         User user = userMapper.selectById(achievement.getUid());
-        String uname = user.getUname();//当前用户姓名
+        String uname = user.getName();//当前用户姓名
         BigDecimal umoney = user.getCommission(); //当前用户的佣金
 
         //获取当前提报的项目
@@ -183,8 +183,12 @@ public class AchieventmentServiceImpl implements AchievementService {
             Detail detail = new Detail();
             if (user != null){
                 //给用户加钱
-                //奖金=用户佣金+项目佣金
-                BigDecimal bonus = user.getCommission().add(achievement.getCommission());
+                //奖金=业绩佣金(项目佣金+用户佣金)
+                BigDecimal bonus = achievement.getCommission();
+
+                System.out.println("奖金bonus"+bonus);
+                System.out.println("钱包"+user.getWallet());
+
                 user.setWallet(user.getWallet().add(bonus));//钱包额度=钱包+奖金
                 userMapper.updateById(user);//入库
 

@@ -19,6 +19,7 @@ import java.util.List;
  */
 @Service
 public class AdministratorServiceImpl implements AdministratorService {
+
     @Autowired
     private AdministratorMapper administratorMapper;
 

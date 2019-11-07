@@ -27,6 +27,7 @@ public class DetailServiceImpl implements DetailService {
         try {
             QueryWrapper queryWrapper = new QueryWrapper();
             queryWrapper.eq("uid",id);
+            queryWrapper.orderByDesc("id");
             List list = detailMapper.selectList(queryWrapper);
             return ResultUtil.exec(true,"OK", list);
         } catch (Exception e){

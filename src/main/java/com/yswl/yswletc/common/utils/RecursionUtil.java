@@ -1,5 +1,6 @@
 package com.yswl.yswletc.common.utils;
 
+import com.yswl.yswletc.dao.DetailMapper;
 import com.yswl.yswletc.dao.UserMapper;
 import com.yswl.yswletc.entity.Detail;
 import com.yswl.yswletc.entity.User;
@@ -21,6 +22,9 @@ public  class RecursionUtil {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private DetailMapper detailMapper;
 
     @Autowired
     private static RecursionUtil recursionUtil;
@@ -54,8 +58,9 @@ public  class RecursionUtil {
         detail.setBalance(user1.getWallet());
         detail.setCreationtime(new Date());
         detail.setRemark("下级业绩分润");
-        userMapper.updateById(user1);
+        detailMapper.insert(detail);//明细入库
 
+        userMapper.updateById(user1);
         //返回
         boolean back = back(user1,id);
         return back;

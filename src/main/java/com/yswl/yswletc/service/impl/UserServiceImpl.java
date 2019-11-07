@@ -64,6 +64,9 @@ public class UserServiceImpl implements UserService {
                 return ResultUtil.exec(false,"ERROR","该手机号已存在");
             }
         }
+        User user2 = userMapper.selectById(user.getUid());
+        System.out.println(user2);
+        user.setUname(user2.getName());//添加父级姓名
         user.setJoindate(new Date());
         userMapper.insert(user);
         return ResultUtil.exec(true,"OK","邀请成功");
@@ -214,18 +217,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResultVo userUpdateOpenid(Integer id, String code) {
         try {
-            String result = HttpOpenUtil.sendGet("https://api.weixin.qq.com/sns/jscode2session",
-                    "appid=" + SystemWechat.APP_ID + //小程序APPID
-                            "&secret="+ SystemWechat.APP_SECRET + //小程序秘钥
+            String result = HttpOpenUtil.sendGet("https://api.weixin.qq.com/sns/oauth2/access_token",
+                    "appid=" + "wx48f8adf218161ab0" + //小程序APPID
+                            "&secret="+ "26bdf10b4dfc24223506a45a170a2d1b" + //小程序秘钥
                             "&js_code="+ code + //前端传来的code
                             "&grant_type=authorization_code");
             JSONObject jsonObject = new JSONObject(result);
+            System.out.println(String.valueOf(jsonObject));
             String openid = jsonObject.getString("openid");
-
             User user = userMapper.selectById(id);
             user.setOpenid(openid);
             userMapper.updateById(user);
-            return ResultUtil.exec(true,"OK","添加成功");
+            return ResultUtil.exec(true,"OK","完成操作");
         }catch (Exception e){
             e.printStackTrace();
             return ResultUtil.exec(false, "ERROR", "网络错误");

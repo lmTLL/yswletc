@@ -20,4 +20,6 @@ public interface OrdersService {
     ResultVo ordersReject(Integer id, String comment);
 
     ResultVo ordersQueryByterm(String name, Integer status, Integer day,Integer current,Integer size);
+
+    ResultVo oordersUpdatePass(Integer id, String comment, String receiptpath);
 }

@@ -28,16 +28,19 @@ public class OrdersController {
     public ResultVo ordersAdd(Orders orders){
         return ordersService.ordersAdd(orders);
     }
+
     //按用户id查询提款列表
     @GetMapping("/orders/queryByUid")
     public ResultVo ordersQueryByUid(Integer uid){
         return ordersService.ordersQueryByUid(uid);
     }
+
     //确认打款
     @PostMapping("/orders/affirm")
     public ResultVo ordersAffirm(Integer id,String comment,String receiptpath){
         return ordersService.ordersAffirm(id,comment,receiptpath);
     }
+
     //驳回打款
     @PostMapping("/orders/reject")
     public ResultVo ordersReject(Integer id,String comment){
@@ -49,5 +52,9 @@ public class OrdersController {
     public ResultVo ordersQueryByterm(String name,Integer status,Integer day,Integer current,Integer size){
        return ordersService.ordersQueryByterm(name,status,day,current,size);
     }
-
+    //更新为通过
+    @PostMapping("/orders/updatePass")
+    public ResultVo ordersUpdatePass(Integer id,String comment,String receiptpath){
+        return ordersService.oordersUpdatePass(id,comment,receiptpath);
+    }
 }

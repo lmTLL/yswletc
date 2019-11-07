@@ -19,6 +19,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -48,6 +49,10 @@ public class OrderServiceImpl implements OrdersService {
     @Override
     @Transactional
     public ResultVo ordersAdd(Orders orders) {
+        BigDecimal val = BigDecimal.valueOf(0);
+        if (!(orders.getAllprice().compareTo(val) > 0)){
+            return ResultUtil.exec(false,"ERROR","请输入正确的提现金额");
+        }
         try {
             //查询该订单的银行卡信息
             BankCard bankCard = bankCardMapper.selectById(orders.getBid());
@@ -144,12 +149,12 @@ public class OrderServiceImpl implements OrdersService {
             detail.setMoney(orders.getAllprice());
             detail.setBalance(user.getWallet());
             detail.setCreationtime(new Date());
-            detail.setRemark("驳回退款");
+            detail.setRemark("驳回提现退款");
 
             //入库
             ordersMapper.updateById(orders);//更新提款单状态
             userMapper.updateById(user);//更新用户钱包
-            detailMapper.updateById(detail);//明细入库
+            detailMapper.insert(detail);//明细入库
             return ResultUtil.exec(true,"OK","操作成功");
         }catch (Exception e){
             e.printStackTrace();
@@ -183,5 +188,33 @@ public class OrderServiceImpl implements OrdersService {
             e.printStackTrace();
             return ResultUtil.exec(false,"REEOR","网络错误");
         }
+    }
+
+    @Override
+    public ResultVo oordersUpdatePass(Integer id, String comment, String receiptpath) {
+
+        Orders orders = ordersMapper.selectById(id);//提款单
+        orders.setComment(comment); //备注
+        orders.setReceiptpath(receiptpath);//回执图片路径
+        orders.setStatus(1);
+        orders.setRemittime(new Date());
+
+        User user = userMapper.selectById(orders.getUid());//提款用户
+        user.setWallet(user.getWallet().subtract(orders.getAllprice()));//更新提款用户的钱包
+
+        Detail detail = new Detail();
+        detail.setUid(user.getId());
+        detail.setSid(orders.getId());
+        detail.setAction(2);
+        detail.setMoney(orders.getAllprice()); //变动金额
+        detail.setBalance(user.getWallet());//余额
+        detail.setCreationtime(new Date());
+        detail.setRemark("金额提现扣除");
+
+        detailMapper.insert(detail); //明细入库
+        ordersMapper.updateById(orders);//订单状态
+        userMapper.updateById(user);//更新用户钱包
+
+        return ResultUtil.exec(true,"OK","完成操作");
     }
 }

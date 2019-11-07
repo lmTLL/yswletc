@@ -41,7 +41,7 @@ public class User implements Serializable {
 
     private BigDecimal commission; //佣金
 
-    private BigDecimal wallet; //钱包
+    private BigDecimal wallet = BigDecimal.valueOf(0); //钱包
 
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date joindate; //注册时间
