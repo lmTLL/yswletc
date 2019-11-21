@@ -31,6 +31,7 @@ public class BanKcardController {
         return bankCardService.bankCardDelete(id);
     }
     @GetMapping("/bankCard/queryAll")
+
     public ResultVo bankCardQueryAll(){
         return bankCardService.bankCardQueryAll();
     }

@@ -202,7 +202,7 @@ public class AchieventmentServiceImpl implements AchievementService {
 
                 detailMapper.insert(detail);
 
-                //查询用户是否有上级+并给上级加钱
+                //加钱
                 boolean back1 = recursionUtil.back(user,id);
                 return ResultUtil.exec(true,"OK","审核完成");
             }

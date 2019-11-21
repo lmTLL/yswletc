@@ -21,5 +21,10 @@
     from t_user
     where id = #{uid,jdbcType=INTEGER}
   </select>
+  <select id="queryAllOpenid" resultType="java.lang.String">
+  SELECT openid
+  FROM db_yswletc.t_user
+  group by openid;
+  </select>
 
 </mapper>

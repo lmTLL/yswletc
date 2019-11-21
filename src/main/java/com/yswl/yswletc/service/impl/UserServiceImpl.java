@@ -218,13 +218,20 @@ public class UserServiceImpl implements UserService {
     public ResultVo userUpdateOpenid(Integer id, String code) {
         try {
             String result = HttpOpenUtil.sendGet("https://api.weixin.qq.com/sns/oauth2/access_token",
-                    "appid=" + "wx48f8adf218161ab0" + //小程序APPID
-                            "&secret="+ "26bdf10b4dfc24223506a45a170a2d1b" + //小程序秘钥
-                            "&js_code="+ code + //前端传来的code
-                            "&grant_type=authorization_code");
+                    "appid=wx48f8adf218161ab0&secret=26bdf10b4dfc24223506a45a170a2d1b&code="+code+"&grant_type=authorization_code");
             JSONObject jsonObject = new JSONObject(result);
-            System.out.println(String.valueOf(jsonObject));
-            String openid = jsonObject.getString("openid");
+            String openid;
+
+            try {
+                openid = jsonObject.getString("openid");
+            }catch (Exception e){
+                e.printStackTrace();
+                return ResultUtil.exec(true,"OK",String.valueOf(jsonObject));
+            }
+
+            if (openid == null){
+                return ResultUtil.exec(true,"OK",String.valueOf(jsonObject));
+            }
             User user = userMapper.selectById(id);
             user.setOpenid(openid);
             userMapper.updateById(user);

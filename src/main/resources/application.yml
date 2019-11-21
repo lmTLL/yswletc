@@ -1,37 +1,33 @@
 server:
-  port: 443
-  ssl:
-    key-store: classpath:2889775_13wangluokeji.cn.pfx
-    key-store-password: 9Ljw89cm
-    key-store-type: PKCS12
+  port: 8081
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: yswl2019
-    url: jdbc:mysql://****:3306/db_yswletc?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-    type: com.zaxxer.hikari.HikariDataSource
-    hikari:
-      minimum-idle: 1
-      maximum-pool-size: 10
-      auto-commit: true
-      idle-timeout: 30000
-      pool-name: DatebookHikariCP
-      max-lifetime: 1200000
-      connection-timeout: 30000
-      connection-test-query: SELECT 1
+    url: jdbc:mysql://47.92.86.199:3306/db_yswletc?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
   servlet:
     multipart:
       max-file-size: 20MB
       max-request-size: 20MB
   #配置redis
   redis:
-    host: ****
+    host: 47.92.86.199
     port: 6379
+    timeout: 5000
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
 #配置图片管理器
 fdfs:
   tracker-list:
-    - *****:22122
+    - 47.92.86.199:22122
   connect-timeout: 5000
   so-timeout: 5000
   thumb-image:
@@ -41,8 +37,8 @@ fdfs:
     jmx-enabled: false
 #xml映射路径
 mybatis-plus:
-  mapper-locations: classpath:com/yswl/yswletc/dao/mapper/*.xml
+  mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.yswl.yswletc.entity
 #图片服务器路径
 img:
-  server: http://*****:83/
+  server: http://47.92.86.199:83/

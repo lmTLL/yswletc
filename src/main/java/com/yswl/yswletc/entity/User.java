@@ -31,7 +31,7 @@ public class User implements Serializable {
 
     private String password; //密码
 
-    private Integer uid; //上级id
+    private Integer uid = 0; //上级id
 
     private String uname; //上级姓名
 
